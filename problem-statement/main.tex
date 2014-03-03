@@ -32,20 +32,25 @@ This eliminates the need to use a gyroscope to compensate for the effect of grav
 on the accelerometer. This limits scope of localisation to dealing with noise
 from the accelerometer and greatly simplifies the control of the system.
 
-Our system is based upon the above description and consists of a single rotor attached
+Our system is based on previous work done by \emph{Martin Rygaard Hermansen} and documented in his Bachelor's Thesis: \emph{Position Control of Simplified, Tethered Drone}. His system consists of a single rotor attached
 to a lever arm constrained to tilt within 0-30 degrees. The arm contains an accelerometer
-and IR distance sensor near the rotor, and a potentiometer at the base that can measure
-the angle of the arm.
+and IR distance sensor near the rotor, and a potentiometer at the base that can measure the angle of the arm. 
+However he had problems when utilizing the accelerometer, presumably due to mechaincal noise.
+
+We seek to solve the problems asociated with the use of an accelerometer in this setup and dessign an altitude controller for the simpified system using sensor fusion of accelerometer and one or more other sensors.
+
+%
+%
 
 \section*{Problem statement}
-This project aims to answer the following question
+This project aims to answer the following questions
 \begin{itemize}
 	\item How can a MEMs accelerometer be stabilized using mechanical noise rejection methods?
-	\item How can measurements from a MEMs accelerometer, an IR distance sensor 
+	\item How can measurements from a MEMs accelerometer, a distance sensor 
 		and a potentiometer be combined to deliver fast and accurate position updates
 		using a software filter?
-	\item How can the position of the system be controlled using a PI, PD, PID controller?
-		of the system.
-	\item What software model accurately describes the physical system?
+	\item How can the position of the system be controlled?
 \end{itemize}
+
+
 \end{document}
