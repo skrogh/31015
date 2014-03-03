@@ -1,0 +1,8 @@
+MEMS accelerometers can be used to determine position in space relative to a known starting point.
+We wish to use such an accelerometer to control the angular position of an arm that is lifted by
+a helicopter rotor. The goal is to develop a control system that has a low noise level and is as accurate as possible.
+
+ex03
+iauexex
+
+Dokument/bachelorprojekt/software/storeUSB_storeCom/hexacontrol_v1

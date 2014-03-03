@@ -1,0 +1,51 @@
+\include{pre}
+\begin{document}
+\section*{Introduction}
+
+Autonomous or semi-autonomous multi-rotor vehicles are subject to the 
+same localisation problem that apply to all autonomous systems, with the added
+difficulty that it must be performed in 3 dimensions instead of only 
+the 2 that ground based vehicles can move in. 
+
+Localisation can be performed by using sensor measurements to infer
+ones position. Sensors that work well for flying vehicles are accelerometers,
+rate gyroscopes and magnetometers. These sensors exist in micro electromechanical
+(MEMs) versions that are small and light enough to fit on smaller aircraft.
+Of these, only the magnetometer can provide
+an absolute measure of position, but it is unuseable indoors or in any place
+that has significant magnetic disturbances. A rate gyroscope measures the
+rate of change of rotation around its axis and an accelerometer measures
+acceleration, as its name implies. To obtain an absolute measure of position
+from these devices, one must therefore integrate their outputs. This leads
+to an unbounded error because the sensors are noisy. Other absolute measures 
+of position, such as GPS, exist and have bounded errors, but very slow update
+rates and thus do not lend themselves well to autonomous control. Luckily,
+the aforementioned rate gyro and accelerometer have very fast update speeds.
+Fusion of the fast sensors with unbounded error and the slow sensors with bounded
+error can lead to a position estimate with fast update times and bounded error.
+The best of both worlds.
+
+A multi-rotor system can be simplified such that control only affects one dimension.
+By attaching a rotor to a lever arm, the position of the rotor is practically limited
+to a single dimension, when the lever arm is constrained to move within small angles.
+This eliminates the need to use a gyroscope to compensate for the effect of gravity
+on the accelerometer. This limits scope of localisation to dealing with noise
+from the accelerometer and greatly simplifies the control of the system.
+
+Our system is based upon the above description and consists of a single rotor attached
+to a lever arm constrained to tilt within 0-30 degrees. The arm contains an accelerometer
+and IR distance sensor near the rotor, and a potentiometer at the base that can measure
+the angle of the arm.
+
+\section*{Problem statement}
+This project aims to answer the following question
+\begin{itemize}
+	\item How can a MEMs accelerometer be stabilized using mechanical noise rejection methods?
+	\item How can measurements from a MEMs accelerometer, an IR distance sensor 
+		and a potentiometer be combined to deliver fast and accurate position updates
+		using a software filter?
+	\item How can the position of the system be controlled using a PI, PD, PID controller?
+		of the system.
+	\item What software model accurately describes the physical system?
+\end{itemize}
+\end{document}
