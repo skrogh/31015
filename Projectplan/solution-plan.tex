@@ -1,0 +1,26 @@
+\section*{Solution Plan}
+
+As the previously done work on the controller is a bit messy, the first step in solving the problem would be to clean up the old projet:
+\begin{itemize}
+\item Reverse engineer previous solution, refactor code
+\item Reconfigure test setup, clean up wire mes
+\end{itemize}
+
+The problem with noise/uncertainty of the accelerometer has to be addressed, thus we have to
+\begin{itemize}
+\item Investigate source of noise in accelerometer
+\item Investigate solutions for noise cancellation
+\begin{itemize}
+	\item Determine if mechanical solution is enough, or
+	\item Investigate possibility of using a digital filter, might require rework on communication interface
+\end{itemize}
+\end{itemize}
+
+The final part of solving the problem is designing the actual controller, for this we would need to
+\begin{itemize}
+	\item Develop / reconfigure model of system and controller to incorporate new accelerometer solution
+	\item Investigate different controllers methodologies, and
+	\item Implement one or more
+\end{itemize} 
+
+Finally we must verify that the controller actually works.
