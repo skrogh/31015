@@ -24,6 +24,8 @@
 *.tar
 *.zip
 *.swp
+*.gch
+
 
 # project folder #
 #project/
