@@ -87,7 +87,6 @@ void destroyKalman( kalmanFilter_t * filter ) {
 	free( filter->H );
 	free( filter->K->data );
 	free( filter->K );
-	free( filter );
 }
 	
 
