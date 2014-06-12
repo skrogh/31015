@@ -1,3 +1,6 @@
+#ifndef KALMAN_H
+#define KALMAN_H
+
 #include <stdlib.h>
 #include <math.h>
 #include "matrix.h"
@@ -14,3 +17,5 @@ void predictKalman( kalmanFilter_t * filter, double u );
 void updateKalman( kalmanFilter_t * filter, double z );
 void initKalman( kalmanFilter_t * filter );
 void destroyKalman( kalmanFilter_t * filter );
+
+#endif //KALMAN_H

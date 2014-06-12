@@ -6,10 +6,10 @@
  *      Author: Soren
  */
 
-#include <stdint.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include "estimator.h"
+#include "kalman.h"
+
 
 
 
@@ -25,8 +25,12 @@ estimator_t* estimatorInit( double initState[3], double calibOffset[6], double c
 	}
 	estimator->g = g;
 
+	//Initiate AHRS
 	double q[4] = {1, 0, 0, 0};
 	MadgwickAHRSinit( &(estimator->AHRS), q, AHRS_beta, AHRS_fs );
+
+	//Initiate Kalman filter
+	initKalman( &(estimator->kalmanFilter) );
 
 	return estimator;
 }
@@ -35,7 +39,6 @@ estimator_t* estimatorInit( double initState[3], double calibOffset[6], double c
 void estimatorPredict( estimator_t* estimator, double acc_gyro[][6], uint32_t n ) {
 	//for each sample
 	int i;
-	double acc[3];
 	for ( i = 0; i < n; i++ ) {
 		//Apply calibration
 		int j;
@@ -47,25 +50,35 @@ void estimatorPredict( estimator_t* estimator, double acc_gyro[][6], uint32_t n 
 		//Perform Madgwick
 		MadgwickAHRSupdate( &(estimator->AHRS), acc_gyro_Calib[3], acc_gyro_Calib[4], acc_gyro_Calib[5], acc_gyro_Calib[0], acc_gyro_Calib[1], acc_gyro_Calib[2], 1, 0, 0);
 		//Rotate acceleration
-		quaternionVectorRotate( acc, acc_gyro_Calib, estimator->AHRS.q );
+		quaternionVectorRotate( estimator->accPlusOffset, acc_gyro_Calib, estimator->AHRS.q );
 		//subtract gravity
-		acc[2] -= estimator->g;
+		estimator->accPlusOffset[2] -= estimator->g;
 		//extract z-axis
 		//predict Kalman-filter
+		predictKalman( &(estimator->kalmanFilter), estimator->accPlusOffset[2] );
 	} //end for
 	//move Kalman output to stateEstimate
-	estimator->stateEstimate[2] = acc[2] - 0;
+	estimator->stateEstimate[0] = Matrix_get( estimator->kalmanFilter.x, 2, 0 );
+	estimator->stateEstimate[1] = estimator->accPlusOffset[2];//Matrix_get( estimator->kalmanFilter.x, 1, 0 );
+	estimator->stateEstimate[2] = estimator->accPlusOffset[2] - Matrix_get( estimator->kalmanFilter.x, 0, 0 );
 	//calculate z-acceleration without offset.
 }
 
 //Update the estimator from a measurement.
 void estimatorUpdate( estimator_t* estimator, double pos ) {
-	//predict Kalman-filter
+	//update Kalman-filter
+	updateKalman( &(estimator->kalmanFilter), pos );
 	//move Kalman output to stateEstimate
+	estimator->stateEstimate[0] = Matrix_get( estimator->kalmanFilter.x, 2, 0 );
+	estimator->stateEstimate[1] = Matrix_get( estimator->kalmanFilter.x, 1, 0 );
+	estimator->stateEstimate[2] = estimator->stateEstimate[2] - Matrix_get( estimator->kalmanFilter.x, 0, 0 );
 	//calculate z-acceleration without offset.
 }
 
 //Free malloced data
 void estimatorFree( estimator_t* estimator ) {
+	destroyKalman( &(estimator->kalmanFilter) );
 	free( estimator );
 }
+
+

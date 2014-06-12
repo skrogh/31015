@@ -22,6 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
+#ifndef MATRIX_H
+#define MATRIX_H
+
+
 struct _Matrix{
     int cols;
     int rows;
@@ -47,4 +51,4 @@ extern Matrix *Matrix_inverse(Matrix *mat);
 extern int Matrix_isIdentity(Matrix *m);
 extern void Matrix_dump(Matrix *m);
 
-
+#endif // MATRIX_H
