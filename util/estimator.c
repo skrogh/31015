@@ -24,6 +24,8 @@ estimator_t* estimatorInit( double initState[3], double calibOffset[6], double c
 		estimator->calibScale[i] = calibScale[i];
 	}
 	estimator->g = g;
+	estimator->speedOfSound = speedOfSound;
+	estimator->distanceOffset = distanceOffset;
 
 	//Initiate AHRS
 	double q[4] = {1, 0, 0, 0};
@@ -125,5 +127,6 @@ void estimatorFree( estimator_t* estimator ) {
 	destroyKalman( &(estimator->kalmanFilter) );
 	free( estimator );
 }
+
 
 
