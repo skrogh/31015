@@ -49,9 +49,9 @@ void initKalman( kalmanFilter_t * filter ) {
 	Matrix_set( filter->x, 2, 0, 0 );
 
 	filter->K = Matrix_create( 3, 1 );
-	Matrix_set( filter->K, 0, 0, 0.1 );
-	Matrix_set( filter->K, 1, 0, 0.5 );
-	Matrix_set( filter->K, 2, 0, 0.5 );
+	Matrix_set( filter->K, 0, 0, 0.05 );
+	Matrix_set( filter->K, 1, 0, 0.25 );
+	Matrix_set( filter->K, 2, 0, 0.25 );
 
 	filter->F = Matrix_create( 3, 3 );
 	Matrix_set( filter->F, 0, 0, 1 );
@@ -87,7 +87,6 @@ void destroyKalman( kalmanFilter_t * filter ) {
 	free( filter->H );
 	free( filter->K->data );
 	free( filter->K );
-	free( filter );
 }
 	
 

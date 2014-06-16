@@ -14,7 +14,7 @@
 
 
 //Initiates the estimator, mallocs stuff
-estimator_t* estimatorInit( double initState[3], double calibOffset[6], double calibScale[6], double g, double AHRS_beta, double AHRS_fs ) {
+estimator_t* estimatorInit( double initState[3], double calibOffset[6], double calibScale[6], double g, double speedOfSound, double distanceOffset, double AHRS_beta, double AHRS_fs ) {
 	estimator_t* estimator = (estimator_t*) malloc( sizeof( estimator_t ) );
 	int i = 0;
 	for ( i = 0; i<6; i++ ) {
@@ -59,8 +59,53 @@ void estimatorPredict( estimator_t* estimator, double acc_gyro[][6], uint32_t n 
 	} //end for
 	//move Kalman output to stateEstimate
 	estimator->stateEstimate[0] = Matrix_get( estimator->kalmanFilter.x, 2, 0 );
-	estimator->stateEstimate[1] = estimator->accPlusOffset[2];//Matrix_get( estimator->kalmanFilter.x, 1, 0 );
+	estimator->stateEstimate[1] = Matrix_get( estimator->kalmanFilter.x, 1, 0 );
 	estimator->stateEstimate[2] = estimator->accPlusOffset[2] - Matrix_get( estimator->kalmanFilter.x, 0, 0 );
+	//calculate z-acceleration without offset.
+}
+
+void estimatorPredictUpdate( estimator_t* estimator, double acc_gyro[][6], uint16_t distanceTime[], uint32_t n ) {
+	//Reset acceleration average
+	estimator->stateEstimate[2] = 0;
+	//Reset speed average
+	estimator->stateEstimate[1] = 0;
+
+	//for each sample
+	int i;
+	for ( i = 0; i < n; i++ ) {
+		//Apply calibration
+		int j;
+		double acc_gyro_Calib[6];
+		double distance;
+		for ( j = 0; j < 6; j++ ) {
+			acc_gyro_Calib[j] = acc_gyro[i][j] + estimator->calibOffset[j];
+			acc_gyro_Calib[j] *= estimator->calibScale[j];
+			distance = distanceTime[i] * estimator->speedOfSound + estimator->distanceOffset;
+		}
+		//Perform Madgwick
+		MadgwickAHRSupdate( &(estimator->AHRS), acc_gyro_Calib[3], acc_gyro_Calib[4], acc_gyro_Calib[5], acc_gyro_Calib[0], acc_gyro_Calib[1], acc_gyro_Calib[2], 1, 0, 0);
+		//Rotate acceleration
+		quaternionVectorRotate( estimator->accPlusOffset, acc_gyro_Calib, estimator->AHRS.q );
+		//subtract gravity
+		estimator->accPlusOffset[2] -= estimator->g;
+		//extract z-axis
+		//predict Kalman-filter
+		predictKalman( &(estimator->kalmanFilter), estimator->accPlusOffset[2] );
+		if ( distanceTime[i] )
+			//update Kalman-filter, when we have a valid point
+			updateKalman( &(estimator->kalmanFilter), distance );
+		// Add to acceleration average
+		estimator->stateEstimate[2] += estimator->accPlusOffset[2] - Matrix_get( estimator->kalmanFilter.x, 0, 0 );
+		// Add to speed average
+		estimator->stateEstimate[1] += Matrix_get( estimator->kalmanFilter.x, 1, 0 );
+	} //end for
+	//move Kalman output to stateEstimate
+	estimator->stateEstimate[0] = Matrix_get( estimator->kalmanFilter.x, 2, 0 );
+
+	if ( n ) {
+		estimator->stateEstimate[1] /= n;
+		estimator->stateEstimate[2] /= n;
+	}
 	//calculate z-acceleration without offset.
 }
 
