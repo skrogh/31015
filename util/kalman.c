@@ -3,6 +3,7 @@
 
 #define FS_ACC 1000.0
 
+/* Performs predict step for a steady state kalman filter.*/
 void predictKalman( kalmanFilter_t * filter, double u ) {
 	Matrix * temp1 = Matrix_product( filter->F, filter->x );
 	Matrix * temp2 = Matrix_product_scaler( filter->B, u  ); 
@@ -20,6 +21,7 @@ void predictKalman( kalmanFilter_t * filter, double u ) {
 	
 }
 
+/* Updates the state vector of a steady state Kalman filter */
 void updateKalman( kalmanFilter_t * filter, double z ) {
 	Matrix * temp = Matrix_product( filter->H, filter->x );
 	Matrix * temp1;
@@ -42,6 +44,7 @@ void updateKalman( kalmanFilter_t * filter, double z ) {
 
 }
 
+/* Steady state kalman gain and state matrices set here */
 void initKalman( kalmanFilter_t * filter ) {
 	filter->x = Matrix_create( 3, 1 );
 	Matrix_set( filter->x, 0, 0, 0 );
@@ -49,9 +52,9 @@ void initKalman( kalmanFilter_t * filter ) {
 	Matrix_set( filter->x, 2, 0, 0 );
 
 	filter->K = Matrix_create( 3, 1 );
-	Matrix_set( filter->K, 0, 0, 0.05 );
-	Matrix_set( filter->K, 1, 0, 0.25 );
-	Matrix_set( filter->K, 2, 0, 0.25 );
+	Matrix_set( filter->K, 0, 0, 0.1/10 );
+	Matrix_set( filter->K, 1, 0, 0.5/10 );
+	Matrix_set( filter->K, 2, 0, 0.5/10 );
 
 	filter->F = Matrix_create( 3, 3 );
 	Matrix_set( filter->F, 0, 0, 1 );

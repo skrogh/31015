@@ -7,10 +7,9 @@
  */
 
 #include <stdlib.h>
+#include <math.h>
 #include "estimator.h"
 #include "kalman.h"
-
-
 
 
 //Initiates the estimator, mallocs stuff
@@ -35,7 +34,7 @@ estimator_t* estimatorInit( double initState[3], double calibOffset[6], double c
 	initKalman( &(estimator->kalmanFilter) );
 
 	//Initiate ultrasonic filter
-	estimator->noiseFilterLength = 5;
+	estimator->noiseFilterLength = 15;
 	estimator->noiseFilterTolerance = 0.10;
 	estimator->noiseFilter = calloc( estimator->noiseFilterLength, sizeof( double ) );
 
@@ -77,6 +76,7 @@ void estimatorPredictUpdate( estimator_t* estimator, double acc_gyro[][6], uint1
 	//Reset speed average
 	estimator->stateEstimate[1] = 0;
 
+	printf( "n: %d\n", n );
 	//for each sample
 	int i;
 	for ( i = 0; i < n; i++ ) {
@@ -99,21 +99,21 @@ void estimatorPredictUpdate( estimator_t* estimator, double acc_gyro[][6], uint1
 		//predict Kalman-filter
 		predictKalman( &(estimator->kalmanFilter), estimator->accPlusOffset[2] );
 		if ( distanceTime[i] ) {
-			//update noise filter
+		//update noise filter
 			for ( j = estimator->noiseFilterLength-1; j > 0; j-- )
 				estimator->noiseFilter[j] = estimator->noiseFilter[j-1];
 			estimator->noiseFilter[0] = distance;
 			// find mean
 			double mean = 0;
-			for ( j = 0; j < estimator->noiseFilterLength; j++ )
+			for ( j = 1; j < estimator->noiseFilterLength; j++ )
 				mean += estimator->noiseFilter[j];
-			mean /= estimator->noiseFilterLength;
+			mean /= estimator->noiseFilterLength - 1;
 
-
-			if ( abs( mean - distance ) < estimator->noiseFilterTolerance ) {
+			if ( fabs( mean - distance ) < estimator->noiseFilterTolerance ) {
 				//update Kalman-filter, when we have a valid point
 				updateKalman( &(estimator->kalmanFilter), distance );
 			}
+
 		}
 		// Add to acceleration average
 		estimator->stateEstimate[2] += estimator->accPlusOffset[2] - Matrix_get( estimator->kalmanFilter.x, 0, 0 );
