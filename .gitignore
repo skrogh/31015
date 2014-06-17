@@ -64,5 +64,5 @@ Thumbs.db
 .texlipse
 .metadata
 .pdf
-*/Rapport/tmp/**/*
-!*Rapport/pictures/**/*
+*/tmp/**/*
+!*/pictures/**/*
