@@ -17,6 +17,9 @@
 typedef struct {
 	AHRS_t AHRS;
 	kalmanFilter_t kalmanFilter;
+	double* noiseFilter;
+	double noiseFilterLength;
+	double noiseFilterTolerance;
 	double stateEstimate[3];
 	double calibOffset[6]; // acc + offset  =  true acc, gyro + offset = true gyro
 	double calibScale[6]; // [acc * scale] = m/s^2, [gyro * scale] = rad/s

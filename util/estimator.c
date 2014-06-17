@@ -34,6 +34,11 @@ estimator_t* estimatorInit( double initState[3], double calibOffset[6], double c
 	//Initiate Kalman filter
 	initKalman( &(estimator->kalmanFilter) );
 
+	//Initiate ultrasonic filter
+	estimator->noiseFilterLength = 5;
+	estimator->noiseFilterTolerance = 0.10;
+	estimator->noiseFilter = calloc( estimator->noiseFilterLength, sizeof( double ) );
+
 	return estimator;
 }
 
@@ -82,7 +87,7 @@ void estimatorPredictUpdate( estimator_t* estimator, double acc_gyro[][6], uint1
 		for ( j = 0; j < 6; j++ ) {
 			acc_gyro_Calib[j] = acc_gyro[i][j] + estimator->calibOffset[j];
 			acc_gyro_Calib[j] *= estimator->calibScale[j];
-			distance = distanceTime[i] * estimator->speedOfSound + estimator->distanceOffset;
+			distance = distanceTime[i] * estimator->speedOfSound / 2.0 + estimator->distanceOffset;
 		}
 		//Perform Madgwick
 		MadgwickAHRSupdate( &(estimator->AHRS), acc_gyro_Calib[3], acc_gyro_Calib[4], acc_gyro_Calib[5], acc_gyro_Calib[0], acc_gyro_Calib[1], acc_gyro_Calib[2], 1, 0, 0);
@@ -93,9 +98,23 @@ void estimatorPredictUpdate( estimator_t* estimator, double acc_gyro[][6], uint1
 		//extract z-axis
 		//predict Kalman-filter
 		predictKalman( &(estimator->kalmanFilter), estimator->accPlusOffset[2] );
-		if ( distanceTime[i] )
-			//update Kalman-filter, when we have a valid point
-			updateKalman( &(estimator->kalmanFilter), distance );
+		if ( distanceTime[i] ) {
+			//update noise filter
+			for ( j = estimator->noiseFilterLength-1; j > 0; j-- )
+				estimator->noiseFilter[j] = estimator->noiseFilter[j-1];
+			estimator->noiseFilter[0] = distance;
+			// find mean
+			double mean = 0;
+			for ( j = 0; j < estimator->noiseFilterLength; j++ )
+				mean += estimator->noiseFilter[j];
+			mean /= estimator->noiseFilterLength;
+
+
+			if ( abs( mean - distance ) < estimator->noiseFilterTolerance ) {
+				//update Kalman-filter, when we have a valid point
+				updateKalman( &(estimator->kalmanFilter), distance );
+			}
+		}
 		// Add to acceleration average
 		estimator->stateEstimate[2] += estimator->accPlusOffset[2] - Matrix_get( estimator->kalmanFilter.x, 0, 0 );
 		// Add to speed average
@@ -124,6 +143,7 @@ void estimatorUpdate( estimator_t* estimator, double pos ) {
 
 //Free malloced data
 void estimatorFree( estimator_t* estimator ) {
+	free( estimator->noiseFilter );
 	destroyKalman( &(estimator->kalmanFilter) );
 	free( estimator );
 }

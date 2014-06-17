@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "estimator.h"
+#include "util/estimator.h"
 #include "quaternion.h"
 
 
