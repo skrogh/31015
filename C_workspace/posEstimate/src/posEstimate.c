@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "estimator.h"
+#include "util/estimator.h"
 #include "quaternion.h"
 
 
@@ -35,7 +35,7 @@ int main(void) {
 	double initState[3] = { 0 };
 	double calibOffset[6] = { -32.6854, 6.9044, 44.0265, 93.6858, -107.6490, 69.1131 };
 	double calibScale[6] = { 0.004755001962, 0.004794788965, 0.004778196636, 0.000532632218, 0.000532632218, 0.000532632218 };
-	estimator_t* estimator = estimatorInit( initState, calibOffset, calibScale, 9.82, AHRS_BETA, Fs_ACC );
+	estimator_t* estimator = estimatorInit( initState, calibOffset, calibScale, 9.82, 340.29/1000000, -0.84, AHRS_BETA, Fs_ACC );
 
 
 	double pos;
@@ -60,7 +60,7 @@ int main(void) {
 		if ( lines > 4 )
 		for ( i = 0; i<n; i++ ) {
 			estimatorPredict( estimator, (double(*)[6])(&acc_gyro[i][0]) , 1 );
-			if ( ( i == n-1 ) && ( ( lines % 200 ) == 0 ) )
+			if ( ( i == n-1 ) && ( ( lines % (200/30) ) == 0 ) )
 				estimatorUpdate( estimator, pos );
 			fprintf( out, "%f, %f, %f\n", estimator->stateEstimate[0], estimator->stateEstimate[1], estimator->stateEstimate[2] );
 		}
@@ -70,6 +70,8 @@ int main(void) {
 
 	fclose( fp );
 	fclose( out );
+
+	estimatorFree( estimator );
 
 	return EXIT_SUCCESS;
 }
