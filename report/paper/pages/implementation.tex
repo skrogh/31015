@@ -1,1 +1,29 @@
 \section{Implementation}
+Our implementation consists of a realtime linux desktop machine, handling the localisation and control logic, and a microcontroller
+positioned on the arm. The microcontroller handles measurements from the MEMs accelerometer and rate gyroscope as well as the ultrasound
+distance sensor. The IR distance sensor is connected directly to the desktop machine through a National Instruments ADC/DAC, as is the 
+potentiometer at the base of the arm which is used for reference measurements.
+
+We have made several changes to the original setup by Hermansen. The most important of these are
+
+\begin{itemize}
+		\item A complete overhaul of the communications subsystem in order to support sending accelerometer, rate gyroscope and 
+			distance measurements at 1kHz and avoid intermittent transmission errors. 
+		\item The original complementary filter has been replaced by a static kalman filter for state estimation and a linear 
+			quadratic regulator for motor command control.
+			\item An ultrasound sensor has been added to the arm for distance measurements.
+\end{itemize}
+
+The microcontroller on the arm is an ARM® Cortex M4F mounted on a Tiva Launchpad development board.
+It is connected to an MPU9150 on which the MEMs accelerometer and rate gyroscope resides.
+
+\subsection{Communications subsystem}
+The Tiva Launcpad recieves measurements from the accelerometer, rate gyroscope and ultrasound sensor. The accelerometer and 
+rate gyroscope is sampled at 1kHz, while the ultrasound sensor has a varying sample rate that depends on the distance to the nearest
+object. The measurement data is transformed into a packet where the leading bit of every byte contains a synchronization bit. When
+the bit is set it signifies the start of a packet. These packets are then sent to the desktop machine at 1kHz. When the ultrasound 
+sensor is not ready with a new measurement, zeroes are transmitted. The packets are received on the desktop machine, which is 
+running a control loop at 200Hz. Here the packets are unpacked to their original form and corrupted packets are thrown away.
+\subsection{Localisation}
+Localisation is performed by a three-step process. First the 
+\subsection{Controller}

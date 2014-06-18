@@ -3,7 +3,7 @@ Autonomous or semi-autonomous airborne robots must be able to locate and control
 the two required for ground-based robots. Various sensors can be used to provide a position estimate and thereby perform localisation.
 There are only a few sensors that work well for lightweight aerial vehicles, e.g micro electromechanical (MEMs) accelerometers, 
 gyroscopes and magnetometers, IR distance sensors, ultrasound distance sensors, gps and small cameras. Of these options, only the MEMs
-sensors can deliver very fast measurements at a rate larger than 200Hz except in rare cases. It would therefore seems that the MEMs
+sensors can deliver very fast measurements at a rate larger than 200Hz except in rare cases. It would therefore seem that the MEMs
 sensors are the easy choice for any application, but since the accelerometers have noise and acceleration measurements need to be 
 integrated twice to yield a position estimate, they are plagued by an unbouded error. Furthermore the available MEMs gyroscpess are rate 
 gyroscopes, that is to say they measure the rate of rotation instead of absolute orientation. Again these have noise and their measurements
@@ -17,5 +17,14 @@ frequently.
 
 We aim to develop and implement such a position-control loop for use on a multirotor drone. However, the development of the position 
 estimation and proof of concept control does not require the full multirotor system. We have therefore implemented the position estimation 
-and control, using a MEMs accelerometer and gyroscope together with a stiance sensor (ultrasound or IR), for a simplified multirotor model. 
-A lever arm with a single rotor attached to one end, inherited from Hermansen\cite{hermansen2013a}.
+and control, using a MEMs accelerometer and gyroscope together with a stiance sensor (ultrasound or IR), for a simplified multirotor model: 
+A lever arm with a single rotor attached to one end, inherited from Hermansen\cite{hermansen2013a}. The arm also contains a MEMs accelerometer
+and rate gyroscope near the rotor. Hermansen determined that the system was plagued by too much mechanical noise, making the accelerometer
+unuseable, and likely ran out of time before being able to dig deeper in to the issue.
+
+In this paper we present a localisation system that uses a MEMs accelerometer and rate gyroscope as well as any distance measuring sensor,
+that together with a linear quadratic gaussian controller is able to control the lever arm. 
+
+%TODO:
+%INSERT FINAL SPECS HERE
+%INSERT STRUCTURE OF PAPER
