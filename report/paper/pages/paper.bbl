@@ -24,6 +24,11 @@
 \bibitem{hermansen2013a}
 M.~R. Hermansen, ``Position control of simplified tethered drone,'' 2013.
 
+\bibitem{Hendricks2008}
+E.~Hendricks, O.~Jannerup, and P.~{Haase S\o rensen}, \emph{{Linear systems
+  control : deterministic and stochastic methods}}.\hskip 1em plus 0.5em minus
+  0.4em\relax Springer Verlag, 2008.
+
 \bibitem{Madgwick2011}
 \BIBentryALTinterwordspacing
 S.~O.~H. Madgwick, A.~J.~L. Harrison, and A.~Vaidyanathan, ``{Estimation of IMU
@@ -31,6 +36,13 @@ S.~O.~H. Madgwick, A.~J.~L. Harrison, and A.~Vaidyanathan, ``{Estimation of IMU
   International Conference on Rehabilitation Robotics : [proceedings]}, vol.
   2011, p. 5975346, Jan. 2011. [Online]. Available:
   \url{http://www.ncbi.nlm.nih.gov/pubmed/22275550}
+\BIBentrySTDinterwordspacing
+
+\bibitem{Welch2006}
+\BIBentryALTinterwordspacing
+G.~Welch and G.~Bishop, ``{An Introduction to the Kalman Filter},'' \emph{In
+  Practice}, vol.~7, no.~1, pp. 1--16, 2006. [Online]. Available:
+  \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.79.6578\&amp;rep=rep1\&amp;type=pdf}
 \BIBentrySTDinterwordspacing
 
 \end{thebibliography}
