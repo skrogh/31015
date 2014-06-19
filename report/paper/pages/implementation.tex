@@ -25,5 +25,40 @@ the bit is set it signifies the start of a packet. These packets are then sent t
 sensor is not ready with a new measurement, zeroes are transmitted. The packets are received on the desktop machine, which is 
 running a control loop at 200Hz. Here the packets are unpacked to their original form and corrupted packets are thrown away.
 \subsection{Localisation}
-Localisation is performed by a three-step process. First the 
+Our localisation algorithm is a three step process. First the rate gyroscpoe measurements are used to determine the orientation of
+the arm. This is done using the Madgwick AHRS system\cite{Madgwick2011}. It is necessary to know the orientation of the arm before
+the acceleration can be calculated because the acceleration measured by the tri-axis MEMs accelerometer is relative to the 
+accelerometer frame. Additionally, gravity results in an offset in the accelerometer measurements that has constant magnitude, but
+orientation varying with the orientation of the accelerometer. The acceleration is then rotated into earth frame and the vertical
+acceleration is isolated since we only care about the height of the arm.
+This is then used as the control input to a static multi rate kalman filter.
+
+The kalman filter executes a predict step for every measurement coming from the accelerometer at 1kHz and an update step as soon 
+as a measurement is received from the distance sensor, be it ultrasound or infrared, at \(\sim\)30Hz. We use the state space 
+vector where the acceleration, velocity and position are perpendicular to the ground.
+\begin{equation*}
+	\hat{\mathbf{x}} = \begin{bmatrix}
+		a_{off} \\
+		v \\
+		x
+	\end{bmatrix}
+\end{equation*}
+Where \(a_{off}\) is the acceleration offset.
+The state transition model where \(T\) is the sample period for the accelerometer.
+\begin{equation*}
+	\mathbf{F} = \begin{bmatrix}
+		1 & 0 & 0 \\
+		T & 1 & 0 \\
+		0 & T & 1 
+	\end{bmatrix}
+\end{equation*}
+And control input model, where the control input is actually the acceleration.
+\begin{equation*}
+	B = \begin{bmatrix}
+		0 \\
+		T \\
+		0 
+	\end{bmatrix}
+\end{equation*}
+
 \subsection{Controller}

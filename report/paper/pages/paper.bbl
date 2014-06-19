@@ -24,4 +24,13 @@
 \bibitem{hermansen2013a}
 M.~R. Hermansen, ``Position control of simplified tethered drone,'' 2013.
 
+\bibitem{Madgwick2011}
+\BIBentryALTinterwordspacing
+S.~O.~H. Madgwick, A.~J.~L. Harrison, and A.~Vaidyanathan, ``{Estimation of IMU
+  and MARG orientation using a gradient descent algorithm.}'' \emph{IEEE ...
+  International Conference on Rehabilitation Robotics : [proceedings]}, vol.
+  2011, p. 5975346, Jan. 2011. [Online]. Available:
+  \url{http://www.ncbi.nlm.nih.gov/pubmed/22275550}
+\BIBentrySTDinterwordspacing
+
 \end{thebibliography}
