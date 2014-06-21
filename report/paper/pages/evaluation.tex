@@ -40,6 +40,9 @@ have very slow update rates. Figure~\ref{fig:pot1hztest} shows how well our impl
 	\label{fig:ultratest}
 \end{figure}
 
+While the control loop runs at 200Hz, it is possible to execute it at up to 1kHz which is the maximum sample frequency of the 
+MEMs devices.
+
 The performance of the system using the ultrasound proximity sensor for positional updates can be seen in figure~\ref{fig:ultratest}.
 It is advantageous to use the ultrasound sensor instead of the IR sensor because the IR sensor can be blinded by glare and is almost
 unuseable in outdoor conditions in addition to the bad accuracy of its measurements arising from the quantization of measurements in

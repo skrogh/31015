@@ -1,1 +1,14 @@
 \section{Conclusion}
+Autonomous or semi-autonomous airborne robots must be able to locate and control their position in three dimensions. We have designed
+and implemented an alititude estimation scheme for near surface flights using either IR or ultrasound proximity sensors together with 
+a MEMs accelerometer and rate gyroscope. As well as a control system for a simplified multirotor model, a lever arm with a propeller 
+on one end, inherited from a previous bachelor thesis. Our implementation solves the problem of providing a fast updating position
+estimate allowing for high bandwidth control. Our implementation is accurate to within \(\pm\)1cm and will function on any platform
+operating near a surface and providing an accelerometer, rate gyroscope and proximity sensor.
+
+We observe that the ultrasound 
+sensor is better suited for outdoor applications and provides better accuracy for the models we have tested.
+
+In order to control a full multirotor vehicle in all dimensions, the system must be expanded such that it can handle localisation 
+along the longitudinal and latitudinal axes in addition to the development of a controller for the non-simple case. 
+We propose investigating the possibility of intergrating visual odometry into the system to perform localisation.
