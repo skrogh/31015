@@ -1,1 +1,35 @@
-\section{Evaluation}
+\section{Evaluation}\label{sec:evaluation}
+\begin{figure}
+	\centering
+	\subfloat[][]{\setlength\figureheight{4cm}
+		\setlength\figurewidth{7cm}
+		\input{./pictures/clau_and_ir/plot.tikz}
+	} \\
+	\subfloat[][]{\setlength\figureheight{4cm}
+		\setlength\figurewidth{7cm}
+		\input{./pictures/rygaard_ir/plot.tikz}
+	}
+	\caption{(a): Our implementation using the IR proximity sensor as reference, sampling at \(\sim\)20Hz versus (b): 
+	Hermansen's implementation using the IR proximity sensor as reference, sampling at 200Hz. For (a) the slow variations in 
+altitude are a result of the measurements from the IR proximity sensor being quantized in 2cm steps giving the arm
+free reign to drift within that range.}
+	\label{fig:irtest}
+\end{figure}
+
+\begin{figure}
+	\setlength\figureheight{4cm}
+	\setlength\figurewidth{7cm}
+	\input{./pictures/clau_and_pot_1/plot.tikz}
+	\caption{Our implementation using the potentiometer sensor as reference, sampling at 1Hz. Even with this low sample rate, the
+		rise time and overshoot are still low because of the bandwidth provided by the accelerometer. The arm never moves more than
+		1cm from the set point.}
+	\label{fig:pot1hztest}
+\end{figure}
+
+\begin{figure}
+	\setlength\figureheight{4cm}
+	\setlength\figurewidth{7cm}
+	\input{./pictures/clau_and_ultra/plot.tikz}
+	\label{fig:ultratest}
+\end{figure}
+	

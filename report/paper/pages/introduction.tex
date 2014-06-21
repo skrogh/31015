@@ -18,12 +18,25 @@ frequently.
 We aim to develop and implement such a position-control loop for use on a multirotor drone. However, the development of the position 
 estimation and proof of concept control does not require the full multirotor system. We have therefore implemented the position estimation 
 and control, using a MEMs accelerometer and gyroscope together with a stiance sensor (ultrasound or IR), for a simplified multirotor model: 
-A lever arm with a single rotor attached to one end, inherited from Hermansen\cite{hermansen2013a}. The arm also contains a MEMs accelerometer
-and rate gyroscope near the rotor. Hermansen determined that the system was plagued by too much mechanical noise, making the accelerometer
-unuseable, and likely ran out of time before being able to dig deeper in to the issue.
+A lever arm with a single rotor attached to one end. The arm also contains a MEMs accelerometer and rate gyroscope near the rotor.
+
+The setup is inherited from Hermansen who built it as part of his bachelor thesis\cite{Hermansen2013a}.
+Like us, Hermansen had intended to control the arm using the accelerometer. However, he determined that there was too much mechanical 
+noise affecting the system, making the accelerometer unuseable, and likely ran out of time before being able to dig deeper into the 
+issue.
+
+Upon beginning this project we intended to start by solving the mechanical noise problem. It quickly became apparent that the 
+accelerometer issue was not caused by noise, but by communication error between the accelerometer and desktop machine used in the setup.
+Our focus therefore shifted towards creating a reliable communications link instead of eliminating mechanical noise.
 
 In this paper we present a localisation system that uses a MEMs accelerometer and rate gyroscope as well as any distance measuring sensor,
-that together with a linear quadratic gaussian controller is able to control the lever arm. 
+that together with a linear quadratic gaussian controller is able to control the lever arm. The localisation implementation is described
+in section~\ref{sec:localisation} and the controller in section~\ref{sec:controller}.
+We have also implemented a new communications 
+link between the MEMs accelerometer, the rate gyroscope and the mission control unit. This was done to eliminate the data corruption 
+issues faced by Hermansen as well as to be able to provide enough bandwidth to transmit accelerometer, rate gyroscope and distance 
+measurements at 1kHz. The details are briefly explained in section~\ref{sec:comms}. 
+
 
 %TODO:
 %INSERT FINAL SPECS HERE

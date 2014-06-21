@@ -1,0 +1,40 @@
+//controller
+POTMETER
+//IRSENSOR
+//ULTRASOUND
+FsSlow 1 //20
+Kp 1000
+Kd 10
+Ka 0
+
+//Kalman //filter
+initAccOff 0
+initVel 0
+initPos -0.075
+
+//feedback //when //running
+K1 0.2
+K2 0.6
+K3 0.5
+KScale 0.8  //8
+
+//feedback //when //initializing
+K1_i 0.2
+K2_i 0.6
+K3_i 0.5
+KScale_i 0.5 //2
+
+
+//noise //filter
+filterTolerance 0.02
+filterLength 15
+
+//ultrasonic //distance
+distanceOffset -0.835
+speedOfSound 340.29
+
+//time //of /takeoff
+startTime 10 //2
+
+//swing //in //time //for //kalman
+swingInTime 5 //1

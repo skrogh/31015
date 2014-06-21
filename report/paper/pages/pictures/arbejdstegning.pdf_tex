@@ -1,0 +1,70 @@
+%% Creator: Inkscape inkscape 0.48.4, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'arbejdstegning.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{304bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.40821642)%
+    \put(0,0){\includegraphics[width=\unitlength]{arbejdstegning.pdf}}%
+    \put(0.56354079,0.11209259){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1.04m}}}%
+    \put(0.36384371,0.11180429){\color[rgb]{1,0,0}\makebox(0,0)[lb]{\smash{xearth}}}%
+    \put(0.25278425,0.10219892){\color[rgb]{0,1,0}\makebox(0,0)[lb]{\smash{yearth}}}%
+    \put(0.3130379,0.1396173){\color[rgb]{0,0,1}\makebox(0,0)[lb]{\smash{zearth}}}%
+    \put(0.77051366,0.21814788){\color[rgb]{0,0,1}\makebox(0,0)[lb]{\smash{zsensor}}}%
+    \put(0.80525202,0.18614728){\color[rgb]{1,0,0}\makebox(0,0)[lb]{\smash{xsensor}}}%
+    \put(0.7206053,0.19319364){\color[rgb]{0,1,0}\makebox(0,0)[lb]{\smash{ysensor}}}%
+    \put(0.91239054,0.19212328){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Motor}}}%
+    \put(0.85757551,0.02916398){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{IR proximity
+sensor}}}%
+    \put(0.70258122,0.05303704){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Ultra-sonic
+proximity
+sensor}}}%
+    \put(0.85167013,0.15268096){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{IMU}}}%
+    \put(0.68027391,0.28190662){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Tiva launchpad
+and motor driver}}}%
+  \end{picture}%
+\endgroup%
