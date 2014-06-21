@@ -70,6 +70,8 @@ Thumbs.db
 *.dpth
 *.md5
 *.auxlock
+*.blg
+*.bbl
 
 
 #vim

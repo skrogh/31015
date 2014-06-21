@@ -1,1 +1,23 @@
 \section{Discussion}
+We determined that the ultrasound proximity sensor was the best choice for near earth altitude estimation for a real multirotor 
+vehicle. If greater accuracy and less oscillation around the set point is required, a different approach to handling the noise would
+need to be developed. However, we feel that an accurary of +-1cm is more than adequate.
+
+The state estimation that we have implemented is intended to be used on a multirotor vehicle. In it's current state it can be applied
+to estimate the altitude of such a platform without any modification, only the control of the motors would need to be different as 
+a full multirotor system 
+of course has different flight dynamics than a tethered lever arm. For longitudinal and latitudal position estimation the same method,
+using proximity sensors, could be applied. It is however unlike that this would yield good results because objects in this plane usually
+have gaps between them that would confuse the system. Instead we think that visual odometry\cite{Nister2004} is a much more
+appealing technology for this
+purpose. It could also be interesting to compare distance estimate through stereoscopic vision with the proximity sensor.
+
+We envision a multirotor with a MEMs accelerometer and rate gyroscope
+mounted at the center of rotation together with an ultrasound proximity sensor, GPS module and camera for visual odometry.
+Using our state estimation implementation,
+it would be possible to rely on the proximity sensor and visual odometry system, when operation near a surface plane, and rely
+on the GPS which has much larger 
+measurement variance, when operating out of proximity range.
+
+Such a system would be able to perform fine grained altitude maneuverse when near objects where this ability is critical, yet also able
+to traverse larger open spaces between objects where such precision is not necessary.
