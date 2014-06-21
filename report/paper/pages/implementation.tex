@@ -16,15 +16,28 @@ We have made several changes to the original setup by Hermansen. The most import
 
 The microcontroller on the arm is an ARM® Cortex M4F mounted on a Tiva Launchpad development board.
 It is connected to an MPU9150 on which the MEMs accelerometer and rate gyroscope resides.
+The test setup can be seen in figure~\ref{fig:labsetup}
+\begin{figure}
+	\centering
+	\includesvg[width=\columnwidth]{pictures/arbejdstegning}
+	\caption{View of the test setup showing earth and sensor reference frames, placement of the IMU containing the 
+	accelerometer and rate gyroscope as well as the placement of the Tiva Launchpad. The arm length is 1.04m.}
+	\label{fig:labsetup}
+\end{figure}
 
-\subsection{Communications subsystem}
+\subsection{Communications subsystem}\label{sec:comms}
 The Tiva Launcpad recieves measurements from the accelerometer, rate gyroscope and ultrasound sensor. The accelerometer and 
 rate gyroscope is sampled at 1kHz, while the ultrasound sensor has a varying sample rate that depends on the distance to the nearest
-object. The measurement data is transformed into a packet where the leading bit of every byte contains a synchronization bit. When
+object.
+It is necessary to sample at 1kHz because the rotor movement creates noise mainly at \(\sim\)70Hz, but also at the second and 
+third harmonics thereof. Hermansen was also able to see this as he sampled at 200Hz, resulting in folding of the second and third
+harmonic.
+
+The measurement data is transformed into a packet where the leading bit of every byte contains a synchronization bit. When
 the bit is set it signifies the start of a packet. These packets are then sent to the desktop machine at 1kHz. When the ultrasound 
 sensor is not ready with a new measurement, zeroes are transmitted. The packets are received on the desktop machine, which is 
 running a control loop at 200Hz. Here the packets are unpacked to their original form and corrupted packets are thrown away.
-\subsection{Localisation}
+\subsection{Localisation}\label{sec:localisation}
 Our localisation algorithm is a three step process. First the rate gyroscpoe measurements are used to determine the orientation of
 the arm. This is done using the Madgwick AHRS system\cite{Madgwick2011}. It is necessary to know the orientation of the arm before
 the acceleration can be calculated because the acceleration measured by the tri-axis MEMs accelerometer is relative to the 
@@ -57,6 +70,24 @@ A measurement is accepted if
 \end{equation*}
 This improves stability greatly as we rely somewhat heavily on the low frequency distance measurements in the kalman filter.
 
+\begin{figure*}
+	\centering
+	\subfloat[][]{\newlength\figureheight
+		\newlength\figurewidth
+		\setlength\figureheight{4cm}
+		\setlength\figurewidth{7cm}
+		\input{./pictures/clau_and_pot_20/plot.tikz}
+	}
+	\subfloat[][]{\setlength\figureheight{4cm}
+		\setlength\figurewidth{7cm}
+		\input{./pictures/rygaard_pot/plot.tikz}
+	}
+	\caption{(a): Flight test of our implementation using the potentiometer as reference and sampling at 20Hz versus (b):
+	Hermansen's implementation using the potentiometer as reference and sampling at 200Hz. (a) exhibits a shorter rise time and less
+	overshoot on a step input and is never more than 1cm from the set point while (b) has an overshoot of slighly more than 1cm}
+	\label{fig:pottest}
+\end{figure*}
+
 For the kalman filter we use the state space vector where the acceleration, velocity and position are perpendicular to the ground.
 \begin{equation*}
 	\hat{\mathbf{x}} = \begin{bmatrix}
@@ -76,7 +107,7 @@ The state transition model where \(T\) is the sample period for the acceleromete
 		0 & T & 1 
 	\end{bmatrix}
 \end{equation*}
-Our control input model, where the control input is actually the acceleration is.
+Our control input model, where the control input is actually the acceleration, is.
 \begin{equation*}
 	\mathbf{B} = \begin{bmatrix}
 		0 \\
@@ -121,8 +152,8 @@ The output from the kalman filter is used to contruct a full one dimensional sta
 	\end{bmatrix}
 \end{equation*}
 Where \(x\) is the estimated height, \(v\) the velocity along the vertical axis and \(a\) the acceleration along the vertical axis. 
-This state estimate is then used with an LQR controller to compute the control output for the motors.
-\subsection{Controller}
+This state estimate is then used with an LQR controller to compute the control output for the motor.
+\subsection{Controller}\label{sec:controller}
 We employ a static LQR controller with the following gain constants.
 \begin{equation*}
 	\mathbf{K}_{LQR} = \begin{bmatrix}

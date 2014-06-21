@@ -10,7 +10,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{caption}
-\usepackage{subcaption}
+\usepackage{subfig}
 %\usepackage{lmodern}
 \graphicspath{{./pictures/}}
 %\usepackage{textpos}
@@ -22,7 +22,10 @@
 \usepackage{fixltx2e}
 \usepackage{pdfpages}
 \usepackage{lipsum}
-%\usepackage{svg}
+\usepackage{tikz}
+\usetikzlibrary{external}\tikzexternalize
+\usepackage{pgfplots}
+\usepackage{svg}
 
 %\epstopdfsetup{update,prepend,verbose,suffix=-generated} % use suffix because you don't want to accidentally overwrite a file that might have been a pdf source. The epstopdf package manual has more on that.
 
