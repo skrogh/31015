@@ -18,12 +18,13 @@ xmax=100,
 xlabel={time [s]},
 ymin=-0.1,
 ymax=0.25,
-ylabel={distance [m]},
+ylabel={distance [m] / angle [rad]},
 axis x line*=bottom,
 axis y line*=left,
-legend style={at={(0.03,0.97)},anchor=north west,draw=black,fill=white,legend cell align=left}
+legend style={at={(0.5,1.03)},anchor=south,draw=black,fill=white,legend cell align=left},
+legend columns = 2
 ]
-\addplot [color=black!50!green,solid,line width=0.7pt]
+\addplot [color=black!50!green,solid,line width=0.1pt]
   table[row sep=crcr]{0	0\\
 0.0500026997840173	0\\
 0.100005399568035	0\\
@@ -1881,7 +1882,7 @@ legend style={at={(0.03,0.97)},anchor=north west,draw=black,fill=white,legend ce
 };
 \addlegendentry{set point};
 
-\addplot [color=white!80!black,solid,line width=0.7pt]
+\addplot [color=white!80!black,solid,line width=0.1pt]
   table[row sep=crcr]{0	0.01\\
 0.0500026997840173	0.01\\
 0.100005399568035	0.01\\
@@ -3739,7 +3740,7 @@ legend style={at={(0.03,0.97)},anchor=north west,draw=black,fill=white,legend ce
 };
 \addlegendentry{+ 1cm};
 
-\addplot [color=white!80!black,solid,line width=0.7pt]
+\addplot [color=white!80!black,solid,line width=0.1pt]
   table[row sep=crcr]{0	-0.01\\
 0.0500026997840173	-0.01\\
 0.100005399568035	-0.01\\
@@ -5597,7 +5598,7 @@ legend style={at={(0.03,0.97)},anchor=north west,draw=black,fill=white,legend ce
 };
 \addlegendentry{- 1cm};
 
-\addplot [color=red!50!green,solid,line width=0.7pt]
+\addplot [color=red,solid,line width=0.1pt]
   table[row sep=crcr]{0	-0.075003\\
 0.0500026997840173	-0.074983\\
 0.100005399568035	-0.074955\\
@@ -7453,9 +7454,9 @@ legend style={at={(0.03,0.97)},anchor=north west,draw=black,fill=white,legend ce
 92.5699981101512	0.003252\\
 92.605	0.003252\\
 };
-\addlegendentry{Estimated position};
+\addlegendentry{Estimated position [m]};
 
-\addplot [color=blue,solid,line width=0.7pt]
+\addplot [color=blue,solid,line width=0.1pt]
   table[row sep=crcr]{0	-0.0749067719101089\\
 0.0500026997840173	-0.0756575527496417\\
 0.100005399568035	-0.0755463917366384\\
@@ -9311,7 +9312,7 @@ legend style={at={(0.03,0.97)},anchor=north west,draw=black,fill=white,legend ce
 92.5699981101512	0.00525540557448442\\
 92.605	0.00521397637557539\\
 };
-\addlegendentry{Measured position};
+\addlegendentry{Measured angle [rad]};
 
 \end{axis}
 \end{tikzpicture}%
