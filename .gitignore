@@ -66,9 +66,12 @@ Thumbs.db
 .pdf
 */tmp/**/*
 !*/pictures/**/*
+!*/pictures/*
 *.dpth
 *.md5
 *.auxlock
+*.blg
+*.bbl
 
 
 #vim
