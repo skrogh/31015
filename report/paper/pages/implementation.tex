@@ -1,4 +1,4 @@
-\section{Implementation}
+\section{Implementation}\label{sec:implemenation}
 Our implementation consists of a realtime linux desktop machine, handling the localisation and control logic, and a microcontroller
 positioned on the arm. The microcontroller handles measurements from the MEMs accelerometer and rate gyroscope as well as the ultrasound
 distance sensor. The IR distance sensor is connected directly to the desktop machine through a National Instruments ADC/DAC, as is the 
@@ -62,7 +62,7 @@ The kalman filter executes a predict step for every measurement coming from the 
 as a measurement is received from the distance sensor, be it ultrasound or infrared, at \(\sim\)30Hz. When using the IR distance 
 sensor a measurement is always ready, however it is only updated at the \(\sim\)30Hz. With the ultrasound sensor however, a measurement
 is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results false readings,
-typically far away from previous values. We employ a moving average filter that culls out measurements too far from the current average.
+typically far away from previous values. We employ a gating filter that culls out measurements too far from a moving average.
 Let \(x_k\) be the current measurement sample, \(w\) the number of measurements taken into the moving average and \(Z\) the threshold value.
 A measurement is accepted if 
 \begin{equation*}
@@ -85,6 +85,7 @@ This improves stability greatly as we rely somewhat heavily on the low frequency
 	Hermansen's implementation using the potentiometer as reference and sampling at 200Hz. (a) exhibits a shorter rise time and less
 	overshoot on a step input and is never more than 1cm from the set point while (b) has an overshoot of slighly more than 1cm.}
 	\label{fig:pottest}
+	\vspace{3pt}
 	\hrulefill
 \end{figure*}
 For the kalman filter we use the state space vector where the acceleration, velocity and position are perpendicular to the ground.
