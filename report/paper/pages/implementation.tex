@@ -27,8 +27,8 @@ The test setup can be seen in figure~\ref{fig:labsetup}
 \begin{figure}
 	\centering
 	\includegraphics[width=\columnwidth]{pictures/process}
-	\caption{View of main control loop.}
-	\label{fig:labsetup}
+	\caption{View of the program flow in the main loop.} 
+	\label{fig:controlflow}
 \end{figure}
 
 \subsection{Communications subsystem}\label{sec:comms}
@@ -46,7 +46,7 @@ instead.
 The packets are received on the desktop machine, which is running a control loop at 200Hz. Here the packets are unpacked to their
 original form and corrupted packets are attempted detected and thrown away.
 \subsection{Localisation}\label{sec:localisation}
-Our localisation algorithm is a three step process. First the rate gyroscope measurements are used to determine the orientation of
+Our localisation algorithm is a three step process. A flow diagram can be seen figure~\ref{fig:controlflow}. First the rate gyroscope measurements are used to determine the orientation of
 the arm. This is done using the Madgwick AHRS system\cite{Madgwick2011}. It is necessary to know the orientation of the arm before
 the acceleration can be calculated because the acceleration measured by the tri-axis MEMs accelerometer is relative to the 
 accelerometer frame. Additionally, gravity results in an offset in the accelerometer measurements that has constant magnitude, but
@@ -73,13 +73,6 @@ as a measurement is received from the distance sensor, be it ultrasound or infra
 sensor a measurement is always ready, however it is only updated at the \(\sim\)30Hz. With the ultrasound sensor however, a measurement
 is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results in false readings,
 typically far away from previous values. We employ a gating filter that culls out measurements too far from a moving average.
-
-Let \(x_k\) be the current measurement sample, \(w\) the number of measurements taken into the moving average and \(Z\) the threshold value.
-A measurement is then accepted if 
-\begin{equation*}
-	Z >\frac{1}{w} \left\lvert \sum_{i=k-w}^{k}x_i \right\rvert
-\end{equation*}
-This improves stability greatly as we rely somewhat heavily on the low frequency distance measurements in the kalman filter.
 \begin{figure*}
 	\centering
 	\subfloat[][]{\newlength\figureheight
@@ -99,6 +92,31 @@ This improves stability greatly as we rely somewhat heavily on the low frequency
 	\vspace{3pt}
 	\hrulefill
 \end{figure*}
+\begin{figure*}
+	\centering
+	\subfloat[][]{\setlength\figureheight{4cm}
+		\setlength\figurewidth{6cm}
+		\input{./pictures/clau_and_ir/plot.tikz}
+	}
+	\subfloat[][]{\setlength\figureheight{4cm}
+		\setlength\figurewidth{6cm}
+		\input{./pictures/rygaard_ir/plot.tikz}
+	}
+	\caption{(a): Our implementation using the IR proximity sensor as reference, sampling at \(\sim\)20Hz versus (b): 
+	Hermansens's implementation using the IR proximity sensor as reference, sampling at 200Hz. For (a) the slow variations in 
+altitude are a result of the measurements from the IR proximity sensor being quantized in 2cm steps giving the arm
+free reign to drift within that range. The noise in (b) is not measurement noise, but rapid oscillation.}
+\label{fig:irtest}
+\vspace{3pt}
+\hrulefill
+\end{figure*}
+
+Let \(x_k\) be the current measurement sample, \(w\) the number of measurements taken into the moving average and \(Z\) the threshold value.
+A measurement is then accepted if 
+\begin{equation*}
+	Z >\frac{1}{w} \left\lvert \sum_{i=k-w}^{k}x_i \right\rvert
+\end{equation*}
+This improves stability greatly as we rely somewhat heavily on the low frequency distance measurements in the kalman filter.
 For the kalman filter we use the state space vector where the acceleration, velocity and position are perpendicular to the ground.
 \begin{equation*}
 	\hat{\mathbf{x}} = \begin{bmatrix}

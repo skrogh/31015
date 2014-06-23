@@ -1,21 +1,3 @@
-\begin{figure*}
-	\centering
-	\subfloat[][]{\setlength\figureheight{4cm}
-		\setlength\figurewidth{6cm}
-		\input{./pictures/clau_and_ir/plot.tikz}
-	}
-	\subfloat[][]{\setlength\figureheight{4cm}
-		\setlength\figurewidth{6cm}
-		\input{./pictures/rygaard_ir/plot.tikz}
-	}
-	\caption{(a): Our implementation using the IR proximity sensor as reference, sampling at \(\sim\)20Hz versus (b): 
-	Hermansens's implementation using the IR proximity sensor as reference, sampling at 200Hz. For (a) the slow variations in 
-altitude are a result of the measurements from the IR proximity sensor being quantized in 2cm steps giving the arm
-free reign to drift within that range. The noise in (b) is not measurement noise, but rapid oscillation.}
-\label{fig:irtest}
-\vspace{3pt}
-\hrulefill
-\end{figure*}
 \section{Evaluation}\label{sec:evaluation}
 We have conducted a stability and step response test for our implementation and compared the results with an identical test of
 Hermansen's implementation when using the potentiometer and IR proximity sensor as a position reference. These comparisons can be
@@ -48,9 +30,7 @@ have very slow update rates. Figure~\ref{fig:pot1hztest} shows how well our impl
 
 The performance of the system using the ultrasound proximity sensor for positional updates can be seen in figure~\ref{fig:ultratest}.
 It is advantageous to use the ultrasound sensor instead of the IR sensor because the IR sensor can be blinded by glare and is almost
-unuseable in outdoor conditions in addition to the bad accuracy of its measurements arising from the quantization of measurements in
+unusable in outdoor conditions in addition to the bad accuracy of its measurements arising from the quantization of measurements in
 2cm steps. The ultrasound sensor does not have these problems. However it is clear that the noise, which we attempted to reduce using the
 gating filter, has not been completely eliminated. For an airborne multirotor it would seem that the ultrasound proximity 
 sensor is the best choice for near earth altitude estimation.
-
-	
