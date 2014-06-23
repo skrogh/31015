@@ -1,9 +1,10 @@
 \section{Introduction}
 Autonomous or semi-autonomous airborne robots must be able to locate and control their position in three dimensions instead of
 the two required for ground-based robots. Various sensors can be used to provide a position estimate and thereby perform localisation.
-There are only a few sensors that work well for lightweight aerial vehicles, e.g micro electromechanical (MEMs) accelerometers, 
-gyroscopes, magnetometers, IR distance sensors, ultrasound distance sensors, gps and small cameras. Of these options, only the MEMs
-sensors can deliver very fast measurements at a rate larger than 200Hz, except in rare cases. It would therefore seem that the MEMs
+There are only a few sensors that work well for lightweight aerial vehicles, e.g
+micro electromechanical (MEMs) accelerometers and gyroscopes, magnetometers, IR distance sensors, ultrasound distance sensors, gps and
+small cameras. Of these options, only the MEMs sensors can deliver very fast measurements at a rate larger than 200Hz, except in rare cases.
+It would therefore seem that the MEMs
 sensors are the easy choice for any application, but since the accelerometers have noise and acceleration measurements need to be 
 integrated twice to yield a position estimate, they are plagued by an unbouded error. Furthermore the available MEMs gyroscopes are rate 
 gyroscopes, that is to say they measure the rate of rotation instead of absolute orientation. Again these have noise and their measurements
@@ -15,21 +16,23 @@ the MEMs accelerometer and rate gyroscope. The unbounded error in the position e
 can then be corrected at the sample rate of the slower sensor. This allows a localisation with bounded error that is also updated
 frequently. 
 
-We aim to develop and implement such a localisation-control loop for use on a multirotor drone. However, the development of the position 
-estimation and proof of concept control does not require the full multirotor system. We have therefore implemented the localisation 
+We aim to develop and implement such a localisation-control loop for use on a
+multirotor drone. The development of the position estimation and proof of
+concept control does, however, not require the full multirotor system.
+We have therefore implemented the localisation 
 and control, using a MEMs accelerometer and rate gyroscope together with a proximity sensor (ultrasound or IR), for a simplified multirotor model: 
 A lever arm with a single rotor attached to one end and sensors mounted close to the roter.
 
 The setup is inherited from Hermansen who built it as part of his bachelor thesis\cite{Hermansen2013a}.
 Like us, Hermansen had intended to control the arm using the accelerometer. However, he determined that there was too much mechanical 
-noise affecting the system, making the accelerometer unuseable, and likely ran out of time before being able to dig deeper into the 
-issue.
+noise/vibration affecting the system, making the accelerometer unuseable, and
+likely ran out of time before being able to dig deeper into the issue.
 
 Upon beginning this project we intended to start by solving the mechanical noise problem. It quickly became apparent that the 
 accelerometer issue was not caused by noise, but by communication error between the accelerometer and desktop machine used in the setup.
 Our focus therefore shifted towards creating a reliable communications link instead of eliminating mechanical noise.
 
-In this paper we present a localisation system that uses a MEMs accelerometer and rate gyroscope as well as any distance measuring sensor,
+In this paper we present a localisation system that uses a MEMs accelerometer and rate gyroscope as well as a distance measuring sensor,
 that together with a linear quadratic gaussian controller is able to control the lever arm. The localisation implementation is described
 in Section~\ref{sec:localisation} and the controller in Section~\ref{sec:controller}.
 We have also implemented a new communications 

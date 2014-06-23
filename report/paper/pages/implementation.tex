@@ -1,6 +1,6 @@
 \section{Implementation}\label{sec:implemenation}
-Our implementation consists of a realtime linux desktop machine, handling the localisation and control logic, and a microcontroller
-positioned on the arm. The microcontroller handles measurements from the MEMs accelerometer and rate gyroscope as well as the ultrasound
+Our implementation consists of a realtime Linux desktop machine, handling the
+localisation and control logic, and a microcontroller positioned on the arm. The microcontroller handles measurements from the MEMs accelerometer and rate gyroscope as well as the ultrasound
 distance sensor. The IR distance sensor is connected directly to the desktop machine through a National Instruments ADC/DAC, as is the 
 potentiometer at the base of the arm which is used for reference measurements.
 
@@ -14,9 +14,11 @@ We have made several changes to the original setup by Hermansen. The most import
 			\item The addition of an ultrasound proximity sensor for distance measurements.
 \end{itemize}
 
-The microcontroller on the arm is an ARM® Cortex\(^{\text{TM}}\) M4F mounted on a Tiva\(^{\text{TM}}\) Launchpad development board from Texas Instruments.
-It is connected to an InvenSense MPU9150 on which the MEMs accelerometer and rate gyroscope resides.
-The test setup can be seen in figure~\ref{fig:labsetup}
+The microcontroller on the arm is an ARM\textregistered Cortex\(^{\text{TM}}\)
+M4F mounted on a Tiva\(^{\text{TM}}\) Launchpad development board from Texas Instruments.
+It is connected to an InvenSense MPU9150 on which the MEMs accelerometer and
+rate gyroscope resides and a Parallax Ping))) ultrasonic distance sensor. The
+test setup can be seen in figure~\ref{fig:labsetup}
 \begin{figure}
 	\centering
 	\includegraphics[width=\columnwidth]{pictures/arbejds_tegning}
@@ -35,8 +37,9 @@ The test setup can be seen in figure~\ref{fig:labsetup}
 The Tiva Launcpad recieves measurements from the accelerometer, rate gyroscope and ultrasound sensor. The accelerometer and 
 rate gyroscope is sampled at 1kHz, while the ultrasound sensor has a varying sample rate that depends on the distance to the nearest
 object.
-It is advantageous to sample at 1kHz because the rotor movement creates noise mainly at \(\sim\)70Hz, but also at the second and 
-third harmonics thereof. Hermansen should have been able to see this as he sampled at 200Hz, resulting in folding of the second and third
+It is advantageous to sample at 1kHz because the rotor movement creates
+vibration mainly at \(\sim\)70Hz, but also at the second and third harmonics thereof.
+Hermansen should have been able to see this as he sampled at 200Hz, resulting in folding of the second and third
 harmonic.
 
 The measurement data is transformed into a packet where the leading bit of every byte contains a synchronization bit. When
@@ -46,12 +49,15 @@ instead.
 The packets are received on the desktop machine, which is running a control loop at 200Hz. Here the packets are unpacked to their
 original form and corrupted packets are attempted detected and thrown away.
 \subsection{Localisation}\label{sec:localisation}
-Our localisation algorithm is a three step process. First the rate gyroscope measurements are used to determine the orientation of
-the arm. This is done using the Madgwick AHRS system\cite{Madgwick2011}. It is necessary to know the orientation of the arm before
+Our localisation algorithm is a three step process. First the accelerometer and
+rate gyroscope measurements are used to determine the orientation of the arm.
+This is done using the Madgwick AHRS algorithm\cite{Madgwick2011}.
+It is necessary to know the orientation of the arm before
 the acceleration can be calculated because the acceleration measured by the tri-axis MEMs accelerometer is relative to the 
 accelerometer frame. Additionally, gravity results in an offset in the accelerometer measurements that has constant magnitude, but
-orientation varying with the orientation of the accelerometer. The acceleration is then rotated into earth frame and the vertical
-acceleration is isolated since we only care about the height of the arm.
+orientation varying with the orientation of the accelerometer. The acceleration
+is then rotated into earth frame, the gravity vector is subtracted and the
+vertical acceleration is isolated since we only care about the height of the arm.
 This is then used as the control input to a static multi rate kalman filter\cite{Welch2006}.
 
 Because the filter is static we
@@ -69,9 +75,9 @@ And update the state
 \end{equation*}
 
 The kalman filter executes a predict step for every measurement coming from the accelerometer at 1kHz and an update step as soon 
-as a measurement is received from the distance sensor, be it ultrasound or infrared, at \(\sim\)30Hz. When using the IR distance 
-sensor a measurement is always ready, however it is only updated at the \(\sim\)30Hz. With the ultrasound sensor however, a measurement
-is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results in false readings,
+as a measurement is received from the distance sensor, be it ultrasound or infrared. When using the IR distance 
+sensor a measurement is always ready, however it is only updated at
+\(\sim\)20Hz. With the ultrasound sensor however, a measurement is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results in false readings,
 typically far away from previous values. We employ a gating filter that culls out measurements too far from a moving average.
 
 Let \(x_k\) be the current measurement sample, \(w\) the number of measurements taken into the moving average and \(Z\) the threshold value.
@@ -138,34 +144,34 @@ Because the kalman filter is static, we need different kalman gains when using t
 We have determined the following kalman gains by manual tuning.
 \begin{equation*}
 	\mathbf{K}_{ult} = \begin{bmatrix}
-		0.01 \\
-		0.05 \\
-		0.05 
+		0.025 \\
+		0.075 \\
+		0.0625
 	\end{bmatrix}, \quad
 	\mathbf{K}_{IR} = \begin{bmatrix}
-		0.01 \\
-		0.05 \\
-		0.05 
+		0.025 \\
+		0.075 \\
+		0.0625
 	\end{bmatrix}
 \end{equation*}
 The potentiometer requires more aggressive gain constants when sampled at lower frequencies. We use the following kalman gains for 1Hz
 and 20Hz sampling frequencies. 
 \begin{equation*}
 	\mathbf{K}_{P,1} = \begin{bmatrix}
-		0.1 \\
-		0.5 \\
-		0.5 
+		0.25 \\
+		0.75 \\
+		0.625 
 	\end{bmatrix},\quad
 	\mathbf{K}_{P,20} = \begin{bmatrix}
 		0.025 \\
-		0.125 \\
-		0.125 
+		0.075 \\
+		0.0625
 	\end{bmatrix}
 \end{equation*}
 
 The output from the kalman filter is used to contruct a full one dimensional state estimate in the form
 \begin{equation*}
-	\hat{\mathbf{x}} = \begin{bmatrix}
+	{\mathbf{x}}_{est} = \begin{bmatrix}
 		x \\
 		v \\
 		a
@@ -174,7 +180,7 @@ The output from the kalman filter is used to contruct a full one dimensional sta
 Where \(x\) is the estimated height, \(v\) the velocity along the vertical axis and \(a\) the acceleration along the vertical axis. 
 This state estimate is then used with an LQR controller to compute the control output for the motor.
 \subsection{Controller}\label{sec:controller}
-We employ a static LQR controller with the following gain constants.
+We employ a static LQR controller with the following gain constants:
 \begin{equation*}
 	\mathbf{K}_{LQR} = \begin{bmatrix}
 		1000 \\
@@ -182,5 +188,12 @@ We employ a static LQR controller with the following gain constants.
 		0 
 	\end{bmatrix}
 \end{equation*}
+such that the output $u$ is given by:
+\begin{equation*}
+u = \mathbf x _{est}^{\mbox T}\mathbf K_{LQR} + u_{off}
+\end{equation*}
+where $u_{off}$ is an offset given to counter the effect of gravity on the lever
+arm.
+
 The controller is essentially a PD controller since it uses only the current position and the derivative thereof, velocity, to calculate
 the next control signal.

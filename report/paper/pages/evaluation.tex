@@ -10,8 +10,10 @@
 	}
 	\caption{(a): Our implementation using the IR proximity sensor as reference, sampling at \(\sim\)20Hz versus (b): 
 	Hermansens's implementation using the IR proximity sensor as reference, sampling at 200Hz. For (a) the slow variations in 
-altitude are a result of the measurements from the IR proximity sensor being quantized in 2cm steps giving the arm
-free reign to drift within that range. The noise in (b) is not measurement noise, but rapid oscillation.}
+altitude are a result of the measurements from the IR proximity sensor being
+quantized in \(\sim\)2cm steps giving the arm free reign to drift within that
+range.
+The noise in (b) is not measurement noise, but rapid oscillation.}
 \label{fig:irtest}
 \vspace{3pt}
 \hrulefill
@@ -22,7 +24,8 @@ Hermansen's implementation when using the potentiometer and IR proximity sensor 
 seen in figure~\ref{fig:pottest} and~\ref{fig:irtest} respectively. Note that on all plots, the reference position measured from the
 potentiometer is given in radians. This means that it does not line up with the estimated position, which is measured in meters above
 the horizontal position of the arm, when the angle is not zero. It should also be noted that we have added a lowpass filter to the
-potentiometer, explaining the difference in noise level between Hermansen's implementation here and in his thesis.
+potentiometer to counter switching noise from commutation in the motor,
+explaining the difference in noise level between Hermansen's implementation here and in his thesis.
 \begin{figure}
 	\setlength\figureheight{4cm}
 	\setlength\figurewidth{6cm}
@@ -49,8 +52,10 @@ have very slow update rates. Figure~\ref{fig:pot1hztest} shows how well our impl
 The performance of the system using the ultrasound proximity sensor for positional updates can be seen in figure~\ref{fig:ultratest}.
 It is advantageous to use the ultrasound sensor instead of the IR sensor because the IR sensor can be blinded by glare and is almost
 unuseable in outdoor conditions in addition to the bad accuracy of its measurements arising from the quantization of measurements in
-2cm steps. The ultrasound sensor does not have these problems. However it is clear that the noise, which we attempted to reduce using the
-gating filter, has not been completely eliminated. For an airborne multirotor it would seem that the ultrasound proximity 
-sensor is the best choice for near earth altitude estimation.
+\(\sim\)2cm steps (and rising for objects further away). The ultrasound sensor
+does not have these problems. Furthermore the ultrasound sensors usually have a
+larger range, the Ping))) goes from 4cm to 3m and calibration is easy as the
+speed of sound is relatively constant. It is clear, however, that the noise which
+we attempted to reduce using the gating filter, has not been completely eliminated. For an airborne multirotor it would seem that the ultrasound proximity sensor is the best choice for near earth altitude estimation.
 
 	
