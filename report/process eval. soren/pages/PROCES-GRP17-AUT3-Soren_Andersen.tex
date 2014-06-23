@@ -33,10 +33,41 @@ højniveausprogrammering og \emph{Linux}, mens undertegnede har mere erfaring me
 lavniveausprogrammering af µprocessore og lodning.
 
 \subsection{Arbejdsprocessen}
-Da 
+Da vi startede projektet regnede vi, som sagt med at systemt var stabilt, men
+dette viste sig ret hurtigt ikke at være tilfældet.
+Det blev også klart at støj/vibration ikke var problemet, men fejl i
+kommunikation med IMU.
 \subsubsection{Arbejds-/tidsplan}
+Vi planlage derfor efter at 13-uger primært skulle gå med at rydde/repparere op
+på den opstilling vi havde overtaget - hvilket nemt lod sig parallelisere: En der
+lodder og fiksker mekanik, samt en der refakturere og fejlfinder kode. Samt lave
+undersøgelser med støj/vibrations målinger, således at 3-ugers kunne bruges på
+alt det ``spændende'' (dessign af state-space opserver og regulator).
+I dokumenteringsfasen kunne arbjdet også let paralleliseres, da een skrev og een
+lavede grafer.
 \subsubsection{Korrektioner}
+Undervejs (lige før Påske) stoppede den enhed der stod for
+PC$\leftrightarrow$motor-driver/IMU kommunikation med at virke helt - da vi ikke
+selv havde kodet denne og kunne danne os overblik over koden på denne gav vi os
+i kast med at skrive vores egen kommunikations enhed.
+Dette bevirkede naturligvis at vi blev sat en smule bagud i tidsplanen, så vi
+lavede en ny - så overblikket blev bevaret.
 
+Ved start på 3-ugers fulgte vi således den nye plan og halede i løbet af den
+første uge ind på den oprindelige plan.
 
+\subsection{Samarbejdet}
+\subsubsection{Internt i gruppen} Vi har før lavet projekter sammen og selvom vi
+frsøgte at holde logbog over alle arbejdsdage her det også været en stor hjælp
+at mange samtaler er foregået over Skype, så en log findes over mange af de
+tanker der er udveklset undervejs.
+\subsubsection{Vejleder} Vi skulle nok havde været bedere til aktivt at søge
+vores vejleder i starten af projektet, men i 3-ugers var der et godt sammenspil.
+Det fungerede godt at have en til at pege i den rigtige retning og give de
+rigtige søgeord (eg. mulitrate kalman filter)
+\subsubsection{Eget bidrag til produktet}
+Primært fokus: Lodde og rydde op i testopstilling. Lave mikroprocessor kode,
+både til håndtering af I2C og ultralyds sensor. Grafisk arbejde (opsætning af
+poster skabelon i Inkscape), \emph{Matlab} plots, figure.
 
 \end{document}
