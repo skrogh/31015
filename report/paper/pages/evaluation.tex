@@ -9,7 +9,7 @@
 		\input{./pictures/rygaard_ir/plot.tikz}
 	}
 	\caption{(a): Our implementation using the IR proximity sensor as reference, sampling at \(\sim\)20Hz versus (b): 
-	Hermansen's implementation using the IR proximity sensor as reference, sampling at 200Hz. For (a) the slow variations in 
+	Hermansens's implementation using the IR proximity sensor as reference, sampling at 200Hz. For (a) the slow variations in 
 altitude are a result of the measurements from the IR proximity sensor being quantized in 2cm steps giving the arm
 free reign to drift within that range. The noise in (b) is not measurement noise, but rapid oscillation.}
 \label{fig:irtest}
@@ -18,7 +18,7 @@ free reign to drift within that range. The noise in (b) is not measurement noise
 \end{figure*}
 \section{Evaluation}\label{sec:evaluation}
 We have conducted a stability and step response test for our implementation and compared the results with an identical test of
-Hermanen's implementation when using the potentiometer and IR proximity sensor as a position reference. These comparisons can be
+Hermansen's implementation when using the potentiometer and IR proximity sensor as a position reference. These comparisons can be
 seen in figure~\ref{fig:pottest} and~\ref{fig:irtest} respectively. It should be noted that we have added a lowpass filter to the
 potentiometer, explaining the difference in noise level between Hermansen's implementation here and in his thesis.
 \begin{figure}
@@ -30,7 +30,8 @@ potentiometer, explaining the difference in noise level between Hermansen's impl
 		1cm from the set point.}
 \label{fig:pot1hztest}
 \end{figure}
-It is interesting to see how low the update rate for the position reference can be set, since many available sensors such as GPS 
+
+It is also interesting to see how low the update rate for the position reference can be set, since many available sensors such as GPS 
 have very slow update rates. Figure~\ref{fig:pot1hztest} shows how well our implementation handles position reference updates at
 1Hz using the potentiometer.
 \begin{figure}
@@ -42,8 +43,6 @@ have very slow update rates. Figure~\ref{fig:pot1hztest} shows how well our impl
 \label{fig:ultratest}
 \end{figure}
 
-While the control loop runs at 200Hz, it is possible to execute it at up to 1kHz which is the maximum sample frequency of the 
-MEMs devices.
 
 The performance of the system using the ultrasound proximity sensor for positional updates can be seen in figure~\ref{fig:ultratest}.
 It is advantageous to use the ultrasound sensor instead of the IR sensor because the IR sensor can be blinded by glare and is almost
@@ -51,4 +50,5 @@ unuseable in outdoor conditions in addition to the bad accuracy of its measureme
 2cm steps. The ultrasound sensor does not have these problems. However it is clear that the noise, which we attempted to reduce using the
 gating filter, has not been completely eliminated. For an airborne multirotor it would seem that the ultrasound proximity 
 sensor is the best choice for near earth altitude estimation.
+
 	
