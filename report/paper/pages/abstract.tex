@@ -1,9 +1,13 @@
 \begin{abstract}
 	Autonomous or semi-autonomous airborne robots must be able to perform localisation in three dimensions.
-	We present a localisation system that estimates altitude, velocity and acceleration at up to 1kHz,
-	using a MEMs accelerometer, rate gyroscope and proximity sensor. We use this localisation scheme together
+	We present a localisation system that estimates altitude, velocity and acceleration,
+	using a MEMs accelerometer and rate gyroscope with high sample rates and proximity sensor with a low sample rate.
+	Our implementation can update the state estimate at the high samplerate of the MEMs devices, while maintaining the accuracy
+	of the slower proximity sensor for the position estimate, and much better accuracy for the velocity and acceleration estimate. 
+	The localisation is implemented using a kalman filter and we combine it with
 	with an LQR controller to control a simplified model of a multirotor, a lever arm with a rotor attached to one end,
 	achieving sub-centimeter precision.
-	Lastly we provide a roadmap for 
-	how the localisation system can be extended to handle a real multirotor in three dimensions.
+	This project is a continuation of a previous bachelor thesis at DTU\@. It is intended as a stepping stone for control of a 
+	fully autonomous multirotor vehicles. We provide a roadmap
+	how the localisation system can be extended to handle the real multirotor in three dimensions.
 \end{abstract}

@@ -14,8 +14,8 @@ We have made several changes to the original setup by Hermansen. The most import
 			\item The addition of an ultrasound proximity sensor for distance measurements.
 \end{itemize}
 
-The microcontroller on the arm is an ARM® Cortex M4F mounted on a Tiva Launchpad development board from Texas Instruments.
-It is connected to an MPU9150 on which the MEMs accelerometer and rate gyroscope resides.
+The microcontroller on the arm is an ARM® Cortex\(^{\text{TM}}\) M4F mounted on a Tiva\(^{\text{TM}}\) Launchpad development board from Texas Instruments.
+It is connected to an InvenSense MPU9150 on which the MEMs accelerometer and rate gyroscope resides.
 The test setup can be seen in figure~\ref{fig:labsetup}
 \begin{figure}
 	\centering
@@ -30,7 +30,7 @@ The Tiva Launcpad recieves measurements from the accelerometer, rate gyroscope a
 rate gyroscope is sampled at 1kHz, while the ultrasound sensor has a varying sample rate that depends on the distance to the nearest
 object.
 It is advantageous to sample at 1kHz because the rotor movement creates noise mainly at \(\sim\)70Hz, but also at the second and 
-third harmonics thereof. Hermansen was also able to see this as he sampled at 200Hz, resulting in folding of the second and third
+third harmonics thereof. Hermansen should have been able to see this as he sampled at 200Hz, resulting in folding of the second and third
 harmonic.
 
 The measurement data is transformed into a packet where the leading bit of every byte contains a synchronization bit. When
@@ -69,7 +69,7 @@ typically far away from previous values. We employ a gating filter that culls ou
 Let \(x_k\) be the current measurement sample, \(w\) the number of measurements taken into the moving average and \(Z\) the threshold value.
 A measurement is then accepted if 
 \begin{equation*}
-	Z >\frac{1}{w} \lvert \sum_{i=k-w}^{k}x_i \rvert
+	Z >\frac{1}{w} \left\lvert \sum_{i=k-w}^{k}x_i \right\rvert
 \end{equation*}
 This improves stability greatly as we rely somewhat heavily on the low frequency distance measurements in the kalman filter.
 \begin{figure*}
