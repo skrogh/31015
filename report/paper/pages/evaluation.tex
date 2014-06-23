@@ -19,7 +19,9 @@ free reign to drift within that range. The noise in (b) is not measurement noise
 \section{Evaluation}\label{sec:evaluation}
 We have conducted a stability and step response test for our implementation and compared the results with an identical test of
 Hermansen's implementation when using the potentiometer and IR proximity sensor as a position reference. These comparisons can be
-seen in figure~\ref{fig:pottest} and~\ref{fig:irtest} respectively. It should be noted that we have added a lowpass filter to the
+seen in figure~\ref{fig:pottest} and~\ref{fig:irtest} respectively. Note that on all plots, the reference position measured from the
+potentiometer is given in radians. This means that it does not line up with the estimated position, which is measured in meters above
+the horizontal position of the arm, when the angle is not zero. It should also be noted that we have added a lowpass filter to the
 potentiometer, explaining the difference in noise level between Hermansen's implementation here and in his thesis.
 \begin{figure}
 	\setlength\figureheight{4cm}
