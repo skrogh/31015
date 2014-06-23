@@ -35,8 +35,9 @@ harmonic.
 
 The measurement data is transformed into a packet where the leading bit of every byte contains a synchronization bit. When
 the bit is set it signifies the start of a packet. These packets are then sent to the desktop machine at 1kHz. When the ultrasound 
-sensor is not ready with a new measurement, zeroes are transmitted. The packets are received on the desktop machine, which is 
-running a control loop at 200Hz. Here the packets are unpacked to their original form and corrupted packets are thrown away.
+sensor is not ready with a new measurement, zeroes are transmitted as its data
+instead.
+The packets are received on the desktop machine, which is running a control loop at 200Hz. Here the packets are unpacked to their original form and corrupted packets are thrown away.
 \subsection{Localisation}\label{sec:localisation}
 Our localisation algorithm is a three step process. First the rate gyroscope measurements are used to determine the orientation of
 the arm. This is done using the Madgwick AHRS system\cite{Madgwick2011}. It is necessary to know the orientation of the arm before
