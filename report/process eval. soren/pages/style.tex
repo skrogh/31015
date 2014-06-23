@@ -1,0 +1,63 @@
+%---------%
+%Easy edit%
+%---------%
+
+%Section formating. arg1 is supplied when making section
+\newcommand\presectionnumber[1]{}
+\newcommand\postsectionnumber[1]{~#1}
+\newcommand\midlesection[1]{}
+\newcommand\sectionnum[1]{}%\arabic{#1}}
+\newcommand\subsectionnum[1]{}%\roman{#1}}
+\newcommand\subsubsectionnum[1]{}%\alph{#1}}
+
+
+
+%------------%
+%setion setup%
+%------------%
+\renewcommand\thesection{Opgave~\sectionnum{section}} %pas p�, kun i matematik
+\renewcommand\thesubsection{\thesection,~\subsectionnum{subsection}}
+\definecolor{MagRed}{RGB}{190,40,15}
+\definecolor{MathGreen}{RGB}{82,164,0}
+
+\titleformat{\section}{\normalfont\sffamily\large\bfseries\color{MathGreen}}{}{0pt}{|\kern-0.15ex|\kern-0.15ex|\kern-0.15ex|\presectionnumber{#1}\sectionnum{section}\postsectionnumber{#1}\qquad\quad\midlesection{#1}\label{\sectionnum{section}}}
+\titleformat{\subsection}[runin]{\large\bfseries}{}{10pt}{\subsectionnum{subsection}~#1\label{\sectionnum{section}\subsectionnum{subsection}}}
+\titleformat{\subsubsection}[runin]{\itshape}{}{0pt}{\subsectionnum{subsection}\subsubsectionnum{subsection}\qquad#1\label{\sectionnum{section}\subsectionnum{subsection}\subsubsectionnum{subsubsection}}}
+%\titleformat{\subsubsection}{\bfseries}{}{0pt}{\alph{subsection}.\arabic{subsubsection})\qquad\quad#1\label{\arabic{section}\alph{subsection}\arabic{subsubsection}}}
+
+%----------%
+%page setup%
+%----------%
+\textwidth = 400pt
+\marginparwidth = 86pt
+\hoffset = -25pt
+\voffset= -30pt
+\textheight = 670pt
+
+%--------%
+%hyperref%
+%--------%
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage{fancyhdr}
+\usepackage[plainpages=false,pdfpagelabels,pageanchor=false]{hyperref} % aktive links
+\hypersetup{%
+  pdfauthor={\name - \stnumber},
+  pdftitle={\assignment},
+  pdfsubject={\course}}
+%\usepackage{memhfixc}% rettelser til hyperref
+
+%-------------%
+%Headder setup%
+%-------------%
+\fancyhf{} % tom header/footer
+\fancyhfoffset{20pt}
+\fancyhfoffset{20pt}
+\fancyhead[OL]{\name \\ \course}
+\fancyhead[OC]{Date \\ \date}
+\fancyhead[OR]{\university\\ \studyline}
+\fancyfoot[FL]{}
+\fancyfoot[FC]{\thepage}
+\fancyfoot[FR]{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}

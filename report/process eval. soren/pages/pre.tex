@@ -1,0 +1,141 @@
+\input{setup}
+
+% Palatino for rm and math | Helvetica for ss | Courier for tt
+\usepackage{mathpazo} % math & rm
+\linespread{1.05}        % Palatino needs more leading (space between lines)
+\usepackage{palatino} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}%allerese hentet % indsættelse af billeder
+\usepackage{epstopdf} %Tilfj "--enable-write18" i argumentet for LaTex build. Dette vil konvertere .eps figurer til pdf-format
+\graphicspath{{./picture/}} % stivej til bibliotek med figurer
+\usepackage{subcaption} %Til gruppering af figurer
+\usepackage{amsmath} %matpakke
+\usepackage{amsfonts} %
+\usepackage{amssymb} %
+\usepackage{steinmetz} % flere matematik symboler
+\usepackage{polynom} %for displaying polynom division
+\usepackage{mathtools} % matematik - understøtter muligheden for at bruge \eqref{}
+\usepackage{float}
+\usepackage{hhline}
+
+%
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[compact,explicit]{titlesec}% http://ctan.org/pkg/titlesec
+%
+
+\include{style} % style setup
+
+%Listings%
+\usepackage{listingsutf8}
+
+
+%setup listings
+\lstset{language=Matlab,
+  extendedchars=true,
+  language=Octave,                % the language of the code
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  tabsize=4,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  %keywordstyle=\color{blue},          % keyword style
+  %commentstyle=\color{dkgreen},       % comment style
+  %stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*,...},              % if you want to add more keywords to the set
+  deletekeywords={...}              % if you want to delete keywords from the given language
+}
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+
+ \lstloadlanguages{% Check Dokumentation for further languages ...
+         %[Visual]Basic
+         %Pascal
+         %C
+         %C++
+         %XML
+         %HTML
+         %Java
+         %VHDL
+         Matlab
+ }
+ %Listings slut%
+
+\usepackage[framed,numbered]{matlab-prettifier}
+
+
+
+
+
+
+
+
+
+%Matematik hurtige ting
+%fed
+\renewcommand\vec[1]{\mathbf{#1}}
+\newcommand\matr[3]{{}_{#2}\mathbf{#1}{}_{#3}}
+\newcommand\facit[1]{\underline{\underline{#1}}}
+%\renewcommand\d[3]{\frac{\mbox{d}^{#3}#1(#2)}{\mbox{d}#2^{#3}}}
+%underline
+%\renewcommand\vec[1]{\underline{#1}}
+%\newcommand\matr[3]{{}_{#2}\underline{\underline{#1}}{}_{#3}}
+
+\renewcommand\matrix[4]{ %{alignment}{to space}{from space}{matrix}
+{\vphantom{\left[\begin{array}{#1}#4\end{array}\right]}}_{#2}\kern-0.5ex
+\left[\begin{array}{#1}
+#4
+\end{array}\right]_{#3}
+}
+\newcommand\e[0]{\mbox{e}}
+\newcommand\E[1]{\cdot 10^{#1}}
+\newcommand\im[0]{i}
+
+\newcommand\Jaco{\mbox{Jacobi}}
+\newcommand\del[2]{\frac{\partial {#1}}{\partial {#2}}}
+\newcommand\abs[1]{\left| {#1} \right|}
+\newcommand\stdfig[4]{ %width,img,cap,lab
+\begin{figure}[hb!]
+\centering
+\includegraphics[width={#1}\textwidth]{#2}
+\caption{#3} \label{#4}
+\end{figure}
+}
+\newcommand\diff{\dot}
+\newcommand\ddiff{\ddot}
+\newcommand\dddiff{\dddot}
+\newcommand\ddddiff{\ddddot}
+
+
+
+
+
+
+% How to make ref to books or urls in bib
+%\citetitle[fx: page 1]{name of ref in bib}
