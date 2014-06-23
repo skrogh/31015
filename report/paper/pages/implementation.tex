@@ -11,10 +11,10 @@ We have made several changes to the original setup by Hermansen. The most import
 			distance measurements at 1kHz and avoid intermittent transmission errors. 
 		\item The original complementary filter has been replaced by a static kalman filter for state estimation and a linear 
 			quadratic regulator (LQR)\cite{Hendricks2008} for motor command control.
-			\item An ultrasound sensor has been added to the arm for distance measurements.
+			\item The addition of an ultrasound proximity sensor for distance measurements.
 \end{itemize}
 
-The microcontroller on the arm is an ARM® Cortex M4F mounted on a Tiva Launchpad development board.
+The microcontroller on the arm is an ARM® Cortex M4F mounted on a Tiva Launchpad development board from Texas Instruments.
 It is connected to an MPU9150 on which the MEMs accelerometer and rate gyroscope resides.
 The test setup can be seen in figure~\ref{fig:labsetup}
 \begin{figure}
@@ -29,7 +29,7 @@ The test setup can be seen in figure~\ref{fig:labsetup}
 The Tiva Launcpad recieves measurements from the accelerometer, rate gyroscope and ultrasound sensor. The accelerometer and 
 rate gyroscope is sampled at 1kHz, while the ultrasound sensor has a varying sample rate that depends on the distance to the nearest
 object.
-It is necessary to sample at 1kHz because the rotor movement creates noise mainly at \(\sim\)70Hz, but also at the second and 
+It is advantageous to sample at 1kHz because the rotor movement creates noise mainly at \(\sim\)70Hz, but also at the second and 
 third harmonics thereof. Hermansen was also able to see this as he sampled at 200Hz, resulting in folding of the second and third
 harmonic.
 
@@ -38,13 +38,15 @@ the bit is set it signifies the start of a packet. These packets are then sent t
 sensor is not ready with a new measurement, zeroes are transmitted. The packets are received on the desktop machine, which is 
 running a control loop at 200Hz. Here the packets are unpacked to their original form and corrupted packets are thrown away.
 \subsection{Localisation}\label{sec:localisation}
-Our localisation algorithm is a three step process. First the rate gyroscpoe measurements are used to determine the orientation of
+Our localisation algorithm is a three step process. First the rate gyroscope measurements are used to determine the orientation of
 the arm. This is done using the Madgwick AHRS system\cite{Madgwick2011}. It is necessary to know the orientation of the arm before
 the acceleration can be calculated because the acceleration measured by the tri-axis MEMs accelerometer is relative to the 
 accelerometer frame. Additionally, gravity results in an offset in the accelerometer measurements that has constant magnitude, but
 orientation varying with the orientation of the accelerometer. The acceleration is then rotated into earth frame and the vertical
 acceleration is isolated since we only care about the height of the arm.
-This is then used as the control input to a static multi rate kalman filter\cite{Welch2006}. Because the filter is static we
+This is then used as the control input to a static multi rate kalman filter\cite{Welch2006}.
+
+Because the filter is static we
 only predict the new state 
 \begin{equation*}
 	\hat{\mathbf{x}}_{k\vert k-1} = \mathbf{F}\hat{\mathbf{x}}_{k-1\vert k-1} + \mathbf{B}a
@@ -61,10 +63,11 @@ And update the state
 The kalman filter executes a predict step for every measurement coming from the accelerometer at 1kHz and an update step as soon 
 as a measurement is received from the distance sensor, be it ultrasound or infrared, at \(\sim\)30Hz. When using the IR distance 
 sensor a measurement is always ready, however it is only updated at the \(\sim\)30Hz. With the ultrasound sensor however, a measurement
-is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results false readings,
+is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results in false readings,
 typically far away from previous values. We employ a gating filter that culls out measurements too far from a moving average.
+
 Let \(x_k\) be the current measurement sample, \(w\) the number of measurements taken into the moving average and \(Z\) the threshold value.
-A measurement is accepted if 
+A measurement is then accepted if 
 \begin{equation*}
 	Z >\frac{1}{w} \lvert \sum_{i=k-w}^{k}x_i \rvert
 \end{equation*}
