@@ -24,7 +24,7 @@ axis y line*=left,
 legend style={at={(0.5,1.03)},anchor=south,draw=black,fill=white,legend cell align=left},
 legend columns = 2
 ]
-\addplot [color=black!50!green,solid,line width=0.1pt]
+\addplot [color=black!50!green,solid,line width=0.2pt]
   table[row sep=crcr]{0	0\\
 0.05000248028176	0\\
 0.10000496056352	0\\
@@ -2047,7 +2047,7 @@ legend columns = 2
 };
 \addlegendentry{set point};
 
-\addplot [color=white!80!black,solid,line width=0.1pt]
+\addplot [color=gray,solid,line width=0.2pt]
   table[row sep=crcr]{0	0.01\\
 0.05000248028176	0.01\\
 0.10000496056352	0.01\\
@@ -4070,7 +4070,7 @@ legend columns = 2
 };
 \addlegendentry{+ 1cm};
 
-\addplot [color=white!80!black,solid,line width=0.1pt]
+\addplot [color=gray,solid,line width=0.2pt]
   table[row sep=crcr]{0	-0.01\\
 0.05000248028176	-0.01\\
 0.10000496056352	-0.01\\
@@ -6093,7 +6093,7 @@ legend columns = 2
 };
 \addlegendentry{- 1cm};
 
-\addplot [color=red,solid,line width=0.1pt]
+\addplot [color=red,solid,line width=0.2pt]
   table[row sep=crcr]{0	-0.074998\\
 0.05000248028176	-0.07494\\
 0.10000496056352	-0.074867\\
@@ -8115,7 +8115,7 @@ legend columns = 2
 };
 \addlegendentry{Estimated angle [rad]};
 
-\addplot [color=blue,solid,line width=0.1pt]
+\addplot [color=blue,solid,line width=0.2pt]
   table[row sep=crcr]{0	-0.0752647584796916\\
 0.05000248028176	-0.0751248593525515\\
 0.10000496056352	-0.0751250050473625\\

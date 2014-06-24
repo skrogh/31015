@@ -21,7 +21,7 @@ hold on
 % plot setpoint
 plot( ana_time, analysis(:,end), '-','Color', [0,0.5,0],'LineWidth',0.1 );
 % plot 1 cm border
-plot( ana_time,[analysis(:,end)+0.01,analysis(:,end)-0.01], '-','Color', [0.8,0.8,0.8],'LineWidth',0.1 );
+plot( ana_time,[analysis(:,end)+0.01,analysis(:,end)-0.01], '-','Color', [0.5,0.5,0.5],'LineWidth',0.1 );
 % plot real angle
 window = 10;
 plot( ana_time, filtfilt(ones(1,window),window,sin(analysis(:,2)))-0.0175, '-','Color', [0,0,1],'LineWidth',0.1 );

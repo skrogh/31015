@@ -1838,7 +1838,7 @@ legend columns = 2
 };
 \addlegendentry{set point};
 
-\addplot [color=white!80!black,solid,line width=0.1pt]
+\addplot [color=gray,solid,line width=0.1pt]
   table[row sep=crcr]{0	0.01\\
 0.0500027659456768	0.01\\
 0.100005531891354	0.01\\
@@ -3652,7 +3652,7 @@ legend columns = 2
 };
 \addlegendentry{+ 1cm};
 
-\addplot [color=white!80!black,solid,line width=0.1pt]
+\addplot [color=gray,solid,line width=0.1pt]
   table[row sep=crcr]{0	-0.01\\
 0.0500027659456768	-0.01\\
 0.100005531891354	-0.01\\

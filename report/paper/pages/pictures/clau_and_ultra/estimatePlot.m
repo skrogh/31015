@@ -21,7 +21,7 @@ hold on
 % plot setpoint
 plot( ana_time, analysis(:,end), '-','Color', [0,0.5,0],'LineWidth',weight );
 % plot 1 cm border
-plot( ana_time,[analysis(:,end)+0.01,analysis(:,end)-0.01], '-','Color', [0.8,0.8,0.8],'LineWidth',weight );
+plot( ana_time,[analysis(:,end)+0.01,analysis(:,end)-0.01], '-','Color', [0.5,0.5,0.5],'LineWidth',weight );
 %plot estimated pos
 plot( ana_time, analysis(:,4), '-','Color', [1,0,0],'LineWidth',weight );
 % plot real pos

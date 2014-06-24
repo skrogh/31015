@@ -24,7 +24,7 @@ axis y line*=left,
 legend style={at={(0.5,1.03)},anchor=south,draw=black,fill=white,legend cell align=left},
 legend columns = 2
 ]
-\addplot [color=black!50!green,solid,line width=0.1pt]
+\addplot [color=black!50!green,solid,line width=0.2pt]
   table[row sep=crcr]{0	0\\
 0.0500026997840173	0\\
 0.100005399568035	0\\
@@ -1882,7 +1882,7 @@ legend columns = 2
 };
 \addlegendentry{set point};
 
-\addplot [color=white!80!black,solid,line width=0.1pt]
+\addplot [color=gray,solid,line width=0.2pt]
   table[row sep=crcr]{0	0.01\\
 0.0500026997840173	0.01\\
 0.100005399568035	0.01\\
@@ -3740,7 +3740,7 @@ legend columns = 2
 };
 \addlegendentry{+ 1cm};
 
-\addplot [color=white!80!black,solid,line width=0.1pt]
+\addplot [color=gray,solid,line width=0.2pt]
   table[row sep=crcr]{0	-0.01\\
 0.0500026997840173	-0.01\\
 0.100005399568035	-0.01\\
@@ -5598,7 +5598,7 @@ legend columns = 2
 };
 \addlegendentry{- 1cm};
 
-\addplot [color=red,solid,line width=0.1pt]
+\addplot [color=red,solid,line width=0.2pt]
   table[row sep=crcr]{0	-0.075003\\
 0.0500026997840173	-0.074983\\
 0.100005399568035	-0.074955\\
@@ -7456,7 +7456,7 @@ legend columns = 2
 };
 \addlegendentry{Estimated position [m]};
 
-\addplot [color=blue,solid,line width=0.1pt]
+\addplot [color=blue,solid,line width=0.2pt]
   table[row sep=crcr]{0	-0.0749067719101089\\
 0.0500026997840173	-0.0756575527496417\\
 0.100005399568035	-0.0755463917366384\\
