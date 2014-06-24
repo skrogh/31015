@@ -17,7 +17,7 @@ We have made several changes to the original setup by Hermansen. The most import
 The microcontroller on the arm is an ARM\textregistered Cortex\(^{\text{TM}}\)
 M4F mounted on a Tiva\(^{\text{TM}}\) Launchpad development board from Texas Instruments.
 It is connected to an InvenSense MPU9150 on which the MEMs accelerometer and
-rate gyroscope resides and a Parallax Ping))) ultrasonic distance sensor. The
+rate gyroscope resides. It is also connected to a Parallax Ping))) ultrasonic distance sensor. The
 test setup can be seen in figure~\ref{fig:labsetup}
 \begin{figure}
 	\centering
@@ -77,7 +77,7 @@ And update the state
 The kalman filter executes a predict step for every measurement coming from the accelerometer at 1kHz and an update step as soon 
 as a measurement is received from the distance sensor, be it ultrasound or infrared. When using the IR distance 
 sensor a measurement is always ready, however it is only updated at
-\(\sim\)20Hz. With the ultrasound sensor however, a measurement is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results in false readings,
+\(\sim\)20Hz. With the ultrasound sensor, a measurement is only valid in the same sample it is recorded. The ultrasound sensor is also afflicted by intermittent noise that results in false readings,
 typically far away from previous values. We employ a gating filter that culls out measurements too far from a moving average.
 \begin{figure*}
 	\centering
