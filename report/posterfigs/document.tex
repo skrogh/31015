@@ -1,0 +1,41 @@
+\documentclass[10pt,conference,final]{IEEEtran}  %draftcls or final
+\usepackage{fancyhdr}
+%\usepackage[top=3cm, bottom=2cm, left=2cm, right=4cm]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[noadjust]{cite} % Bibtex package
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+%\usepackage{caption}
+\usepackage[caption=false,labelfont=sf,textfont=sf]{subfig}
+%\usepackage{lmodern}
+\graphicspath{{./pictures/}}
+%\usepackage{textpos}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listingsutf8}
+\usepackage{courier}
+\usepackage{epstopdf}
+\usepackage{fixltx2e}
+\usepackage{pdfpages}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usetikzlibrary{external}\tikzexternalize
+\usepackage{pgfplots}
+\usepackage{svg}
+
+\begin{document} 
+
+\newlength\figureheight
+		\newlength\figurewidth
+\setlength\figureheight{4.5cm}
+		\setlength\figurewidth{12.35cm}
+		
+	
+		\input{./clau_and_pot_1/plot.tikz}
+		\input{./clau_and_ultra/plot.tikz}
+
+\end{document}
